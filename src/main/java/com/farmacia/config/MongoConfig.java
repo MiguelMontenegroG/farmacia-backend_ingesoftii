@@ -1,4 +1,4 @@
-package config;
+package com.farmacia.config;
 
 public class MongoConfig {
 }

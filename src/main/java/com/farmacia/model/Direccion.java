@@ -1,4 +1,4 @@
-package model;
+package com.farmacia.model;
 
 public class Direccion {
 }

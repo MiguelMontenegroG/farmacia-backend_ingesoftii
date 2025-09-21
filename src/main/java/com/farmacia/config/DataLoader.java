@@ -1,0 +1,150 @@
+package com.farmacia.config;
+
+import com.farmacia.model.Categoria;
+import com.farmacia.model.Producto;
+import com.farmacia.repository.CategoriaRepository;
+import com.farmacia.repository.ProductoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
+
+@Configuration
+public class DataLoader {
+
+    @Autowired
+    private CategoriaRepository categoriaRepository;
+
+    @Autowired
+    private ProductoRepository productoRepository;
+
+    @Bean
+    public CommandLineRunner initData() {
+        return args -> {
+            // Limpiar datos existentes
+            productoRepository.deleteAll();
+            categoriaRepository.deleteAll();
+
+            // Crear categorías
+            Categoria medicamentos = new Categoria("Medicamentos", "Medicamentos de venta libre y recetados");
+            medicamentos.setImagenUrl("/images/medicamentos.jpg");
+            medicamentos.setKeywords(Arrays.asList("medicina", "fármacos", "pastillas", "jarabe"));
+            medicamentos.setOrden(1);
+
+            Categoria cuidadoPersonal = new Categoria("Cuidado Personal", "Productos para el cuidado e higiene personal");
+            cuidadoPersonal.setImagenUrl("/images/cuidado-personal.jpg");
+            cuidadoPersonal.setKeywords(Arrays.asList("higiene", "belleza", "cuidado", "cosmética"));
+            cuidadoPersonal.setOrden(2);
+
+            Categoria vitaminas = new Categoria("Vitaminas y Suplementos", "Suplementos alimenticios y vitaminas");
+            vitaminas.setImagenUrl("/images/vitaminas.jpg");
+            vitaminas.setKeywords(Arrays.asList("vitaminas", "suplementos", "minerales", "nutrición"));
+            vitaminas.setOrden(3);
+
+            Categoria maternidad = new Categoria("Maternidad y Bebés", "Productos para mamás y bebés");
+            maternidad.setImagenUrl("/images/maternidad.jpg");
+            maternidad.setKeywords(Arrays.asList("bebés", "mamás", "lactancia", "pañales"));
+            maternidad.setOrden(4);
+
+            categoriaRepository.saveAll(Arrays.asList(medicamentos, cuidadoPersonal, vitaminas, maternidad));
+
+            // Subcategorías de Medicamentos
+            Categoria analgesicos = new Categoria("Analgésicos", "Medicamentos para el dolor");
+            analgesicos.setCategoriaPadre(medicamentos);
+            analgesicos.setImagenUrl("/images/analgesicos.jpg");
+            analgesicos.setOrden(1);
+
+            Categoria antibioticos = new Categoria("Antibióticos", "Medicamentos antibióticos");
+            antibioticos.setCategoriaPadre(medicamentos);
+            antibioticos.setImagenUrl("/images/antibioticos.jpg");
+            antibioticos.setOrden(2);
+            antibioticos.setKeywords(Arrays.asList("infecciones", "bacterias"));
+
+            // Guardar categorías
+            categoriaRepository.saveAll(Arrays.asList(medicamentos, cuidadoPersonal, vitaminas, maternidad, analgesicos, antibioticos));
+
+            // Crear productos de prueba
+            List<Producto> productos = Arrays.asList(
+                    crearProducto("Paracetamol 500mg", "Analgésico y antipirético para el dolor y fiebre",
+                            new BigDecimal("15.50"), new BigDecimal("12.99"), true, analgesicos,
+                            "/images/paracetamol.jpg", 100, "Bayer", "Paracetamol", "7501006557012", false),
+
+                    crearProducto("Ibuprofeno 400mg", "Antiinflamatorio no esteroideo para el dolor e inflamación",
+                            new BigDecimal("18.75"), new BigDecimal("15.50"), true, analgesicos,
+                            "/images/ibuprofeno.jpg", 85, "Pfizer", "Ibuprofeno", "7501006557029", false),
+
+                    crearProducto("Aspirina 500mg", "Ácido acetilsalicílico para el dolor y fiebre",
+                            new BigDecimal("12.99"), null, false, analgesicos,
+                            "/images/aspirina.jpg", 120, "Bayer", "Ácido Acetilsalicílico", "7501006557036", false),
+
+                    crearProducto("Amoxicilina 500mg", "Antibiótico de amplio espectro",
+                            new BigDecimal("45.99"), new BigDecimal("39.99"), true, antibioticos,
+                            "/images/amoxicilina.jpg", 60, "Roche", "Amoxicilina", "7501006557043", true),
+
+                    crearProducto("Azitromicina 500mg", "Antibiótico macrólido",
+                            new BigDecimal("52.50"), null, false, antibioticos,
+                            "/images/azitromicina.jpg", 45, "Novartis", "Azitromicina", "7501006557050", true),
+
+                    crearProducto("Jabón Neutro", "Jabón suave para piel sensible",
+                            new BigDecimal("8.99"), new BigDecimal("6.99"), true, cuidadoPersonal,
+                            "/images/jabon-neutro.jpg", 200, "Dove", "Glicerina", "7501006557067", false),
+
+                    crearProducto("Shampoo Anticaspa", "Shampoo para control de caspa",
+                            new BigDecimal("22.50"), null, false, cuidadoPersonal,
+                            "/images/shampoo-caspa.jpg", 150, "Head & Shoulders", "Piroctona Olamina", "7501006557074", false),
+
+                    crearProducto("Vitamina C 1000mg", "Suplemento de vitamina C",
+                            new BigDecimal("29.99"), new BigDecimal("24.99"), true, vitaminas,
+                            "/images/vitamina-c.jpg", 90, "Nature Made", "Ácido Ascórbico", "7501006557081", false),
+
+                    crearProducto("Multivitamínico", "Complejo multivitamínico completo",
+                            new BigDecimal("35.75"), null, false, vitaminas,
+                            "/images/multivitaminico.jpg", 75, "Centrum", "Multivitamínico", "7501006557098", false),
+
+                    crearProducto("Pañales Talla 1", "Pañales para recién nacidos",
+                            new BigDecimal("89.99"), new BigDecimal("79.99"), true, maternidad,
+                            "/images/panales-t1.jpg", 50, "Huggies", "Algodón", "7501006557104", false),
+
+                    crearProducto("Leche Materna", "Fórmula infantil etapa 1",
+                            new BigDecimal("125.50"), null, false, maternidad,
+                            "/images/leche-materna.jpg", 30, "Similac", "Proteínas de leche", "7501006557111", false)
+            );
+
+            // Guardar productos
+            productoRepository.saveAll(productos);
+
+            System.out.println("=== DATOS DE PRUEBA CARGADOS ===");
+            System.out.println("Categorías creadas: " + categoriaRepository.count());
+            System.out.println("Productos creados: " + productoRepository.count());
+            System.out.println("================================");
+            System.out.println("API disponible en: http://localhost:8080");
+            System.out.println("Swagger UI disponible en: http://localhost:8080/swagger-ui.html");
+            System.out.println("================================");
+        };
+    }
+
+    private Producto crearProducto(String nombre, String descripcion, BigDecimal precio,
+                                   BigDecimal precioOferta, boolean enOferta, Categoria categoria,
+                                   String imagenUrl, int stock, String laboratorio,
+                                   String principioActivo, String codigoBarras, boolean requiereReceta) {
+        Producto producto = new Producto();
+        producto.setNombre(nombre);
+        producto.setDescripcion(descripcion);
+        producto.setPrecio(precio);
+        producto.setPrecioOferta(precioOferta);
+        producto.setEnOferta(enOferta);
+        producto.setCategoria(categoria);
+        producto.setImagenUrl(imagenUrl);
+        producto.setStock(stock);
+        producto.setLaboratorio(laboratorio);
+        producto.setPrincipioActivo(principioActivo);
+        producto.setCodigoBarras(codigoBarras);
+        producto.setRequiereReceta(requiereReceta);
+        producto.setActivo(true);
+        return producto;
+    }
+}
