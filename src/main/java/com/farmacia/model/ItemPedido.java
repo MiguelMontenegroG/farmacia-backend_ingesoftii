@@ -1,7 +1,6 @@
-// ========== ITEM CARRITO ==========
 package com.farmacia.model;
 
-public class ItemCarrito {
+public class ItemPedido {
     private String productoId;
     private String nombreProducto;
     private Float precio;
@@ -10,9 +9,9 @@ public class ItemCarrito {
     private String imagenUrl;
 
     // Constructores
-    public ItemCarrito() {}
+    public ItemPedido() {}
 
-    public ItemCarrito(String productoId, String nombreProducto, Float precio, Integer cantidad) {
+    public ItemPedido(String productoId, String nombreProducto, Float precio, Integer cantidad) {
         this.productoId = productoId;
         this.nombreProducto = nombreProducto;
         this.precio = precio;
