@@ -13,7 +13,7 @@ public interface ProductoRepository extends MongoRepository<Producto, String> {
     @Query("{'nombre': {$regex: ?0, $options: 'i'}, 'activo': true}")
     List<Producto> findByNombreContainingIgnoreCase(String nombre);
 
-    @Query("{'categoria.$id': ?0, 'activo': true}")
+    @Query("{'categoria.$id': ObjectId(?0), 'activo': true}")
     List<Producto> findByCategoriaId(String categoriaId);
 
     List<Producto> findByActivoTrue();
