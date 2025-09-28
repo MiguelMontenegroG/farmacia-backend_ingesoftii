@@ -62,4 +62,9 @@ public class ProductoService {
             productoRepository.save(producto);
         });
     }
+
+    public Producto obtenerPorId(String id) {
+        return productoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + id));
+    }
 }

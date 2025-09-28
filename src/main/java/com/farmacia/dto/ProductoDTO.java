@@ -17,6 +17,7 @@ public class ProductoDTO {
     private String principioActivo;
     private String codigoBarras;
     private boolean requiereReceta;
+    private boolean activo;
 
     // Constructores
     public ProductoDTO() {}
@@ -25,7 +26,7 @@ public class ProductoDTO {
                        BigDecimal precioOferta, boolean enOferta, String categoriaId,
                        String categoriaNombre, String imagenUrl, int stock,
                        String laboratorio, String principioActivo, String codigoBarras,
-                       boolean requiereReceta) {
+                       boolean requiereReceta,boolean activo) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -84,4 +85,6 @@ public class ProductoDTO {
 
     public boolean isRequiereReceta() { return requiereReceta; }
     public void setRequiereReceta(boolean requiereReceta) { this.requiereReceta = requiereReceta; }
+
+    public void setActivo(boolean activo) { this.activo = activo; }
 }
