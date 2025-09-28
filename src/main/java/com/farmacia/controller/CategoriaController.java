@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/categorias")
 @Tag(name = "Categorías", description = "API para gestión de categorías de productos")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CategoriaController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class CategoriaController {
             @ApiResponse(responseCode = "200", description = "Categorías obtenidas exitosamente"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
-    @GetMapping
+    @GetMapping("/obtener")
     public ResponseEntity<List<CategoriaDTO>> obtenerTodasLasCategorias() {
         try {
             List<Categoria> categorias = categoriaService.obtenerTodasLasCategorias();

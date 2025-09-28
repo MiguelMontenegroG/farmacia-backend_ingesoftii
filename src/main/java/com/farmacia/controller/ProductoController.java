@@ -21,7 +21,7 @@ public class ProductoController {
     }
 
     // Crear producto
-    @PostMapping
+    @PostMapping("/crear")
     public Producto crearProducto(@RequestBody Producto producto) {
         return productoService.guardarProducto(producto);
     }
