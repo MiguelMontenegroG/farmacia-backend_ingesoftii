@@ -1,8 +1,8 @@
-package com.farmacia.model;
+package com.farmacia.dto;
 
 import java.math.BigDecimal;
 
-public class ItemVenta {
+public class ItemVentaDTO {
     private String productoId;
     private String nombreProducto;
     private int cantidad;
@@ -10,10 +10,10 @@ public class ItemVenta {
     private boolean requiereReceta;
 
     // Constructores
-    public ItemVenta() {}
+    public ItemVentaDTO() {}
 
-    public ItemVenta(String productoId, String nombreProducto, int cantidad,
-                     BigDecimal precioUnitario, boolean requiereReceta) {
+    public ItemVentaDTO(String productoId, String nombreProducto, int cantidad,
+                        BigDecimal precioUnitario, boolean requiereReceta) {
         this.productoId = productoId;
         this.nombreProducto = nombreProducto;
         this.cantidad = cantidad;
