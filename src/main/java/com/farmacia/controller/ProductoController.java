@@ -1,5 +1,6 @@
 package com.farmacia.controller;
 
+
 import com.farmacia.dto.ProductoDTO;
 import com.farmacia.model.Producto;
 import com.farmacia.service.ProductoService;
@@ -19,7 +20,6 @@ public class ProductoController {
     @Autowired
     private ProductoService productoService;
 
-    // Obtener todos los productos con filtros opcionales
     @GetMapping
     public ResponseEntity<List<ProductoDTO>> getProductos(
             @RequestParam(required = false) String busqueda,
@@ -33,7 +33,7 @@ public class ProductoController {
         try {
             List<Producto> productos;
 
-            // Si hay búsqueda, usar el método de búsqueda
+
             if (busqueda != null && !busqueda.trim().isEmpty()) {
                 productos = productoService.buscarProductosPorNombre(busqueda);
             } else if (categoriaId != null && !categoriaId.trim().isEmpty()) {
@@ -42,7 +42,7 @@ public class ProductoController {
                 productos = productoService.obtenerCatalogo();
             }
 
-            // Aplicar filtros adicionales con BigDecimal
+
             if (precioMin != null) {
                 BigDecimal minPrecio = BigDecimal.valueOf(precioMin);
                 productos = productos.stream()
@@ -69,7 +69,7 @@ public class ProductoController {
                         .collect(Collectors.toList());
             }
 
-            // Aplicar ordenamiento
+
             if (ordenarPor != null) {
                 switch (ordenarPor) {
                     case "precio-asc":
@@ -84,7 +84,7 @@ public class ProductoController {
                 }
             }
 
-            // Convertir a DTO
+
             List<ProductoDTO> productosDTO = productos.stream()
                     .map(this::convertirADTO)
                     .collect(Collectors.toList());
@@ -97,7 +97,6 @@ public class ProductoController {
         }
     }
 
-    // Obtener producto por ID
     @GetMapping("/{id}")
     public ResponseEntity<ProductoDTO> getProductoPorId(@PathVariable String id) {
         try {
@@ -113,26 +112,25 @@ public class ProductoController {
         }
     }
 
-    // Crear producto
     @PostMapping("/crear")
     public ResponseEntity<ProductoDTO> crearProducto(@RequestBody Producto producto) {
         try {
             Producto nuevoProducto = productoService.guardarProducto(producto);
             return ResponseEntity.ok(convertirADTO(nuevoProducto));
         } catch (Exception e) {
-            e.printStackTrace(); // Para debug
+            e.printStackTrace();
             return ResponseEntity.internalServerError().build();
         }
     }
 
-    // Método auxiliar para convertir Producto a ProductoDTO
+
     private ProductoDTO convertirADTO(Producto producto) {
         ProductoDTO dto = new ProductoDTO();
         dto.setId(producto.getId());
         dto.setNombre(producto.getNombre());
         dto.setDescripcion(producto.getDescripcion());
 
-        // Convertir BigDecimal a Double para el DTO
+
         if (producto.getPrecio() != null) {
             dto.setPrecio(BigDecimal.valueOf(producto.getPrecio().doubleValue()));
         }
@@ -153,4 +151,5 @@ public class ProductoController {
 
         return dto;
     }
+
 }
