@@ -6,8 +6,8 @@ public class ProductoDTO {
     private String id;
     private String nombre;
     private String descripcion;
-    private double precio;
-    private double precioOferta;
+    private BigDecimal precio;
+    private BigDecimal precioOferta;
     private boolean enOferta;
     private String categoriaId;
     private String categoriaNombre;
@@ -22,8 +22,8 @@ public class ProductoDTO {
     // Constructores
     public ProductoDTO() {}
 
-    public ProductoDTO(String id, String nombre, String descripcion, double precio,
-                       double precioOferta, boolean enOferta, String categoriaId,
+    public ProductoDTO(String id, String nombre, String descripcion, BigDecimal precio,
+                       BigDecimal precioOferta, boolean enOferta, String categoriaId,
                        String categoriaNombre, String imagenUrl, int stock,
                        String laboratorio, String principioActivo, String codigoBarras,
                        boolean requiereReceta,boolean activo) {
@@ -53,11 +53,11 @@ public class ProductoDTO {
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public double getPrecio() { return precio; }
-    public void setPrecio(double precio) { this.precio = precio; }
+    public BigDecimal getPrecio() { return precio; }
+    public void setPrecio(BigDecimal precio) { this.precio = precio; }
 
-    public double getPrecioOferta() { return precioOferta; }
-    public void setPrecioOferta(double precioOferta) { this.precioOferta = precioOferta; }
+    public BigDecimal getPrecioOferta() { return precioOferta; }
+    public void setPrecioOferta(BigDecimal precioOferta) { this.precioOferta = precioOferta; }
 
     public boolean isEnOferta() { return enOferta; }
     public void setEnOferta(boolean enOferta) { this.enOferta = enOferta; }

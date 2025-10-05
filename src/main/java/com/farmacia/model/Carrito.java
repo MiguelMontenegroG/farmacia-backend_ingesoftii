@@ -1,107 +1,64 @@
 package com.farmacia.model;
 
-import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
-@Data
 @Document(collection = "carritos")
 public class Carrito {
-
     @Id
     private String id;
+
+    @Indexed
     private String usuarioId;
+
     private List<ItemCarrito> items;
-    private double subtotal;
-    private double total;
-    private boolean activo;
+    private Float subtotal;
+    private Float descuento;
+    private Float total;
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaActualizacion;
+    private boolean activo;
 
-    public Carrito() {
-        this.items = new ArrayList<>();
-        this.activo = true;
-        this.fechaCreacion = LocalDateTime.now();
-        this.fechaActualizacion = LocalDateTime.now();
-        this.subtotal = 0.0;
-        this.total = 0.0;
-    }
+    // Constructores
+    public Carrito() {}
 
     public Carrito(String usuarioId) {
-        this();
         this.usuarioId = usuarioId;
+        this.fechaCreacion = LocalDateTime.now();
+        this.activo = true;
+        this.subtotal = 0.0f;
+        this.descuento = 0.0f;
+        this.total = 0.0f;
     }
 
-    public void agregarItem(Producto producto, int cantidad) {
-        ItemCarrito itemExistente = buscarItem(producto.getId());
+    // Getters y Setters
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
-        if (itemExistente != null) {
-            itemExistente.setCantidad(itemExistente.getCantidad() + cantidad);
-            itemExistente.calcularSubtotal();
-        } else {
-            ItemCarrito nuevoItem = new ItemCarrito(producto, cantidad);
-            items.add(nuevoItem);
-        }
+    public String getUsuarioId() { return usuarioId; }
+    public void setUsuarioId(String usuarioId) { this.usuarioId = usuarioId; }
 
-        actualizarTotales();
-        this.fechaActualizacion = LocalDateTime.now();
-    }
+    public List<ItemCarrito> getItems() { return items; }
+    public void setItems(List<ItemCarrito> items) { this.items = items; }
 
-    public void actualizarCantidadItem(String productoId, int cantidad) {
-        ItemCarrito item = buscarItem(productoId);
+    public Float getSubtotal() { return subtotal; }
+    public void setSubtotal(Float subtotal) { this.subtotal = subtotal; }
 
-        if (item == null) {
-            throw new RuntimeException("Item no encontrado en el carrito");
-        }
+    public Float getDescuento() { return descuento; }
+    public void setDescuento(Float descuento) { this.descuento = descuento; }
 
-        if (cantidad <= 0) {
-            items.remove(item);
-        } else {
-            item.setCantidad(cantidad);
-            item.calcularSubtotal();
-        }
+    public Float getTotal() { return total; }
+    public void setTotal(Float total) { this.total = total; }
 
-        actualizarTotales();
-        this.fechaActualizacion = LocalDateTime.now();
-    }
+    public LocalDateTime getFechaCreacion() { return fechaCreacion; }
+    public void setFechaCreacion(LocalDateTime fechaCreacion) { this.fechaCreacion = fechaCreacion; }
 
-    public void eliminarItem(String productoId) {
-        ItemCarrito item = buscarItem(productoId);
+    public LocalDateTime getFechaActualizacion() { return fechaActualizacion; }
+    public void setFechaActualizacion(LocalDateTime fechaActualizacion) { this.fechaActualizacion = fechaActualizacion; }
 
-        if (item != null) {
-            items.remove(item);
-            actualizarTotales();
-            this.fechaActualizacion = LocalDateTime.now();
-        }
-    }
-
-    public void limpiar() {
-        this.items.clear();
-        this.subtotal = 0.0;
-        this.total = 0.0;
-        this.fechaActualizacion = LocalDateTime.now();
-    }
-
-    private ItemCarrito buscarItem(String productoId) {
-        return items.stream()
-                .filter(item -> item.getProductoId().equals(productoId))
-                .findFirst()
-                .orElse(null);
-    }
-
-    private void actualizarTotales() {
-        this.subtotal = items.stream()
-                .mapToDouble(ItemCarrito::getSubtotal)
-                .sum();
-        this.total = this.subtotal;
-    }
-
-    public int getCantidadTotalItems() {
-        return items.stream()
-                .mapToInt(ItemCarrito::getCantidad)
-                .sum();
-    }
+    public boolean isActivo() { return activo; }
+    public void setActivo(boolean activo) { this.activo = activo; }
 }

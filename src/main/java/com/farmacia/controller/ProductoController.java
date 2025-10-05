@@ -72,11 +72,11 @@ public class ProductoController {
         dto.setDescripcion(producto.getDescripcion());
 
 
-        if (producto.getPrecio() >0) {
-            dto.setPrecio(producto.getPrecio());
+        if (producto.getPrecio() != null) {
+            dto.setPrecio(BigDecimal.valueOf(producto.getPrecio().doubleValue()));
         }
-        if (producto.getPrecioOferta() >0) {
-            dto.setPrecioOferta(producto.getPrecioOferta());
+        if (producto.getPrecioOferta() != null) {
+            dto.setPrecioOferta(BigDecimal.valueOf(producto.getPrecioOferta().doubleValue()));
         }
 
         dto.setEnOferta(producto.isEnOferta());
