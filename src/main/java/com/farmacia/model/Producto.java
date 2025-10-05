@@ -11,8 +11,8 @@ public class Producto {
     private String id;
     private String nombre;
     private String descripcion;
-    private BigDecimal precio;
-    private BigDecimal precioOferta;
+    private double precio;
+    private double precioOferta;
     private boolean enOferta;
 
     @DBRef
@@ -31,7 +31,7 @@ public class Producto {
         this.activo = true;
     }
 
-    public Producto(String nombre, String descripcion, BigDecimal precio, Categoria categoria) {
+    public Producto(String nombre, String descripcion,double precio, Categoria categoria) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -64,7 +64,7 @@ public class Producto {
         this.descripcion = descripcion;
     }
 
-    public BigDecimal getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
@@ -72,7 +72,7 @@ public class Producto {
         this.precio = precio;
     }
 
-    public BigDecimal getPrecioOferta() {
+    public double getPrecioOferta() {
         return precioOferta;
     }
 
