@@ -149,7 +149,7 @@ public class CatalogoController {
         }
     }
 
-    // Método auxiliar para convertir Producto a ProductoDTO
+
     private ProductoDTO convertirADTO(Producto producto) {
         ProductoDTO dto = new ProductoDTO();
         dto.setId(producto.getId());

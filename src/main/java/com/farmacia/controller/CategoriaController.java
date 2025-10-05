@@ -116,7 +116,6 @@ public class CategoriaController {
         }
     }
 
-    // Método auxiliar para convertir Categoria a CategoriaDTO
     private CategoriaDTO convertirADTO(Categoria categoria) {
         CategoriaDTO dto = new CategoriaDTO();
         dto.setId(categoria.getId());

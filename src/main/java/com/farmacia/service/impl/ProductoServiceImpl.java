@@ -1,13 +1,16 @@
 package com.farmacia.service.impl;
 
+import com.farmacia.dto.FiltroProductoDTO;
 import com.farmacia.model.Producto;
 import com.farmacia.repository.ProductoRepository;
 import com.farmacia.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductoServiceImpl implements ProductoService {
@@ -15,55 +18,55 @@ public class ProductoServiceImpl implements ProductoService {
     @Autowired
     private ProductoRepository productoRepository;
 
-    // Obtener todos los productos activos (catálogo)
+
     @Override
     public List<Producto> obtenerCatalogo() {
         return productoRepository.findByActivoTrue();
     }
 
-    // Buscar productos por nombre
+
     @Override
     public List<Producto> buscarProductosPorNombre(String nombre) {
         return productoRepository.findByNombreContainingIgnoreCase(nombre);
     }
 
-    // Buscar productos por categoría
+
     @Override
     public List<Producto> buscarProductosPorCategoria(String categoriaId) {
         return productoRepository.findByCategoriaId(categoriaId);
     }
 
-    // Buscar por principio activo
+
     @Override
     public List<Producto> buscarPorPrincipioActivo(String principioActivo) {
         return productoRepository.findByPrincipioActivoContainingIgnoreCase(principioActivo);
     }
 
-    // Buscar por laboratorio
+
     @Override
     public List<Producto> buscarPorLaboratorio(String laboratorio) {
         return productoRepository.findByLaboratorioContainingIgnoreCase(laboratorio);
     }
 
-    // Obtener producto por ID
+
     @Override
     public Optional<Producto> obtenerProductoPorId(String id) {
         return productoRepository.findById(id);
     }
 
-    // Obtener productos en oferta
+
     @Override
     public List<Producto> obtenerProductosEnOferta() {
         return productoRepository.findByEnOfertaTrueAndActivoTrue();
     }
 
-    // Guardar producto
+
     @Override
     public Producto guardarProducto(Producto producto) {
         return productoRepository.save(producto);
     }
 
-    // Eliminar producto (soft delete)
+
     @Override
     public void desactivarProducto(String id) {
         Optional<Producto> productoOpt = productoRepository.findById(id);
@@ -77,5 +80,83 @@ public class ProductoServiceImpl implements ProductoService {
     public Producto obtenerPorId(String id) {
         return productoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + id));
+    }
+
+    @Override
+    public List<Producto> filtrarProductos(FiltroProductoDTO filtros) {
+        List<Producto> productos;
+
+
+        if (filtros.getBusqueda() != null && !filtros.getBusqueda().trim().isEmpty()) {
+            productos = productoRepository.findByNombreContainingIgnoreCase(filtros.getBusqueda());
+        } else if (filtros.getCategoriaId() != null && !filtros.getCategoriaId().trim().isEmpty()) {
+            productos = productoRepository.findByCategoriaId(filtros.getCategoriaId());
+        } else {
+            productos = productoRepository.findByActivoTrue();
+        }
+
+
+        if (filtros.getPrecioMin() != null) {
+            BigDecimal min = BigDecimal.valueOf(filtros.getPrecioMin());
+            productos = productos.stream()
+                    .filter(p -> getPrecioFinal(p).compareTo(min) >= 0)
+                    .collect(Collectors.toList());
+        }
+
+
+        if (filtros.getPrecioMax() != null) {
+            BigDecimal max = BigDecimal.valueOf(filtros.getPrecioMax());
+            productos = productos.stream()
+                    .filter(p -> getPrecioFinal(p).compareTo(max) <= 0)
+                    .collect(Collectors.toList());
+        }
+
+
+        if (filtros.getRequiereReceta() != null) {
+            boolean requiere = filtros.getRequiereReceta();
+            productos = productos.stream()
+                    .filter(p -> p.isRequiereReceta() == requiere)
+                    .collect(Collectors.toList());
+        }
+
+
+        if (filtros.getActivo() != null) {
+            boolean activo = filtros.getActivo();
+            productos = productos.stream()
+                    .filter(p -> p.isActivo() == activo)
+                    .collect(Collectors.toList());
+        }
+
+        if (filtros.getOrdenarPor() != null) {
+            switch (filtros.getOrdenarPor()) {
+                case "precio-asc":
+                    productos.sort((a, b) -> getPrecioFinal(a).compareTo(getPrecioFinal(b)));
+                    break;
+                case "precio-desc":
+                    productos.sort((a, b) -> getPrecioFinal(b).compareTo(getPrecioFinal(a)));
+                    break;
+                case "nombre":
+                    productos.sort((a, b) -> a.getNombre().compareToIgnoreCase(b.getNombre()));
+                    break;
+                case "rating":
+
+                    productos.sort((a, b) -> {
+
+                        return a.getNombre().compareToIgnoreCase(b.getNombre());
+                    });
+                    break;
+            }
+        }
+
+        return productos;
+    }
+
+    private BigDecimal getPrecioFinal(Producto producto) {
+        if (producto.isEnOferta() && producto.getPrecioOferta() != null
+                && producto.getPrecioOferta().compareTo(BigDecimal.ZERO) > 0) {
+            return producto.getPrecioOferta();
+        }
+
+        return producto.getPrecio();
     }
 }

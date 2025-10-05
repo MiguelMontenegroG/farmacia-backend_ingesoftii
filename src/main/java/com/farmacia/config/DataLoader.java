@@ -25,11 +25,11 @@ public class DataLoader {
     @Bean
     public CommandLineRunner initData() {
         return args -> {
-            // Limpiar datos existentes
+
             productoRepository.deleteAll();
             categoriaRepository.deleteAll();
 
-            // Crear categorías
+
             Categoria medicamentos = new Categoria("Medicamentos", "Medicamentos de venta libre y recetados");
             medicamentos.setImagenUrl("/images/medicamentos.jpg");
             medicamentos.setKeywords(Arrays.asList("medicina", "fármacos", "pastillas", "jarabe"));
@@ -52,7 +52,7 @@ public class DataLoader {
 
             categoriaRepository.saveAll(Arrays.asList(medicamentos, cuidadoPersonal, vitaminas, maternidad));
 
-            // Subcategorías de Medicamentos
+
             Categoria analgesicos = new Categoria("Analgésicos", "Medicamentos para el dolor");
             analgesicos.setCategoriaPadre(medicamentos);
             analgesicos.setImagenUrl("/images/analgesicos.jpg");
@@ -64,57 +64,55 @@ public class DataLoader {
             antibioticos.setOrden(2);
             antibioticos.setKeywords(Arrays.asList("infecciones", "bacterias"));
 
-            // Guardar categorías
             categoriaRepository.saveAll(Arrays.asList(medicamentos, cuidadoPersonal, vitaminas, maternidad, analgesicos, antibioticos));
 
-            // Crear productos de prueba
             List<Producto> productos = Arrays.asList(
                     crearProducto("Paracetamol 500mg", "Analgésico y antipirético para el dolor y fiebre",
-                            new BigDecimal("15.50"), new BigDecimal("12.99"), true, analgesicos,
+                            new BigDecimal("10000"), new BigDecimal("7000"), true, analgesicos,
                             "https://res.cloudinary.com/dtcpxlmbk/image/upload/v1759043987/farmacia/exehkzcsuyyktzbunlmv.webp", 100, "Bayer", "Paracetamol", "7501006557012", false),
 
                     crearProducto("Ibuprofeno 400mg", "Antiinflamatorio no esteroideo para el dolor e inflamación",
-                            new BigDecimal("18.75"), new BigDecimal("15.50"), true, analgesicos,
+                            new BigDecimal("12000"), new BigDecimal("6000"), true, analgesicos,
                             "https://res.cloudinary.com/dtcpxlmbk/image/upload/v1759044416/farmacia/vk47adlolcpo82lqemea.webp", 85, "Pfizer", "Ibuprofeno", "7501006557029", false),
 
                     crearProducto("Aspirina 500mg", "Ácido acetilsalicílico para el dolor y fiebre",
-                            new BigDecimal("12.99"), null, false, analgesicos,
+                            new BigDecimal("8000"), null, false, analgesicos,
                             "https://res.cloudinary.com/dtcpxlmbk/image/upload/v1759044537/farmacia/visopcevdj4s4flxyvtc.webp", 120, "Bayer", "Ácido Acetilsalicílico", "7501006557036", false),
 
                     crearProducto("Amoxicilina 500mg", "Antibiótico de amplio espectro",
-                            new BigDecimal("45.99"), new BigDecimal("39.99"), true, antibioticos,
+                            new BigDecimal("35000"), new BigDecimal("29000"), true, antibioticos,
                             "https://res.cloudinary.com/dtcpxlmbk/image/upload/v1759044646/farmacia/shlwhbx36y6jitimb6vi.webp", 60, "Roche", "Amoxicilina", "7501006557043", true),
 
                     crearProducto("Azitromicina 500mg", "Antibiótico macrólido",
-                            new BigDecimal("52.50"), null, false, antibioticos,
+                            new BigDecimal("40000"), null, false, antibioticos,
                             "https://res.cloudinary.com/dtcpxlmbk/image/upload/v1759044740/farmacia/ph0orinzwf26rslyyz2p.webp", 45, "Novartis", "Azitromicina", "7501006557050", true),
 
                     crearProducto("Jabón Neutro", "Jabón suave para piel sensible",
-                            new BigDecimal("8.99"), new BigDecimal("6.99"), true, cuidadoPersonal,
+                            new BigDecimal("18000"), new BigDecimal("15000"), true, cuidadoPersonal,
                             "https://res.cloudinary.com/dtcpxlmbk/image/upload/v1759044854/farmacia/whxawavo2xc2xu2ssbvw.webp", 200, "Dove", "Glicerina", "7501006557067", false),
 
                     crearProducto("Shampoo Anticaspa", "Shampoo para control de caspa",
-                            new BigDecimal("22.50"), null, false, cuidadoPersonal,
+                            new BigDecimal("25000"), null, false, cuidadoPersonal,
                             "https://res.cloudinary.com/dtcpxlmbk/image/upload/v1759045129/test_hknwwk.webp", 150, "Head & Shoulders", "Piroctona Olamina", "7501006557074", false),
 
                     crearProducto("Vitamina C 1000mg", "Suplemento de vitamina C",
-                            new BigDecimal("29.99"), new BigDecimal("24.99"), true, vitaminas,
+                            new BigDecimal("35000"), new BigDecimal("31000"), true, vitaminas,
                             "https://res.cloudinary.com/dtcpxlmbk/image/upload/v1759045218/test_usuib2.webp", 90, "Nature Made", "Ácido Ascórbico", "7501006557081", false),
 
                     crearProducto("Multivitamínico", "Complejo multivitamínico completo",
-                            new BigDecimal("35.75"), null, false, vitaminas,
+                            new BigDecimal("70000"), null, false, vitaminas,
                             "https://res.cloudinary.com/dtcpxlmbk/image/upload/v1759045263/test_kf11xy.webp", 75, "Centrum", "Multivitamínico", "7501006557098", false),
 
                     crearProducto("Pañales Talla 1", "Pañales para recién nacidos",
-                            new BigDecimal("89.99"), new BigDecimal("79.99"), true, maternidad,
+                            new BigDecimal("35000"), new BigDecimal("30000"), true, maternidad,
                             "https://res.cloudinary.com/dtcpxlmbk/image/upload/v1759045178/test_iklqva.webp", 50, "Huggies", "Algodón", "7501006557104", false),
 
                     crearProducto("Leche Materna", "Fórmula infantil etapa 1",
-                            new BigDecimal("125.50"), null, false, maternidad,
+                            new BigDecimal("28000"), null, false, maternidad,
                             "https://res.cloudinary.com/dtcpxlmbk/image/upload/v1759045302/test_feumi7.webp", 30, "Similac", "Proteínas de leche", "7501006557111", false)
             );
 
-            // Guardar productos
+
             productoRepository.saveAll(productos);
 
             System.out.println("=== DATOS DE PRUEBA CARGADOS ===");
