@@ -1,13 +1,17 @@
 package com.farmacia.config;
 
+import com.farmacia.Enum.Rol;
 import com.farmacia.model.Categoria;
 import com.farmacia.model.Producto;
+import com.farmacia.model.Usuario;
 import com.farmacia.repository.CategoriaRepository;
 import com.farmacia.repository.ProductoRepository;
+import com.farmacia.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -21,6 +25,12 @@ public class DataLoader {
 
     @Autowired
     private ProductoRepository productoRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Bean
     public CommandLineRunner initData() {
@@ -122,6 +132,40 @@ public class DataLoader {
             System.out.println("API disponible en: http://localhost:8080");
             System.out.println("Swagger UI disponible en: http://localhost:8080/swagger-ui.html");
             System.out.println("================================");
+        };
+    }
+    @Bean
+    public CommandLineRunner cargarUsuariosPrueba() {
+        return args -> {
+
+            usuarioRepository.deleteAll();
+
+
+            Usuario cliente = new Usuario(
+                    "Juan",
+                    "Pérez",
+                    "cliente@farmacia.com",
+                    "3001234567",
+                    passwordEncoder.encode("1234"),
+                    Rol.CLIENTE
+            );
+
+
+            Usuario admin = new Usuario(
+                    "Ana",
+                    "Gómez",
+                    "admin@farmacia.com",
+                    "3007654321",
+                    passwordEncoder.encode("1234"),
+                    Rol.ADMINISTRADOR
+            );
+
+            usuarioRepository.saveAll(Arrays.asList(cliente, admin));
+
+            System.out.println("=== USUARIOS DE PRUEBA CARGADOS ===");
+            System.out.println("Cliente: cliente@farmacia.com / 1234");
+            System.out.println("Administrador: admin@farmacia.com / 1234");
+            System.out.println("===================================");
         };
     }
 
