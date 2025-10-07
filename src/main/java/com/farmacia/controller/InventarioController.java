@@ -1,5 +1,7 @@
 package com.farmacia.controller;
 
+import com.farmacia.dto.AlertaStockDTO;
+import com.farmacia.dto.ReporteInventarioDTO;
 import com.farmacia.service.InventarioService;
 import com.farmacia.dto.InventarioDTO;
 import com.farmacia.dto.ActualizarStockRequest;
@@ -48,6 +50,24 @@ public class InventarioController {
                                                         @RequestBody ActualizarStockRequest request) {
         InventarioDTO productoActualizado = inventarioService.disminuirStock(id, request);
         return ResponseEntity.ok(productoActualizado);
+    }
+
+    @GetMapping("/alertas/stock-bajo")
+    public ResponseEntity<List<AlertaStockDTO>> obtenerAlertasStock() {
+        List<AlertaStockDTO> alertas = inventarioService.obtenerAlertasStock();
+        return ResponseEntity.ok(alertas);
+    }
+
+    @GetMapping("/stock-critico")
+    public ResponseEntity<List<AlertaStockDTO>> obtenerProductosStockCritico() {
+        List<AlertaStockDTO> productosCriticos = inventarioService.obtenerProductosStockCritico();
+        return ResponseEntity.ok(productosCriticos);
+    }
+
+    @GetMapping("/reporte")
+    public ResponseEntity<ReporteInventarioDTO> generarReporteInventario() {
+        ReporteInventarioDTO reporte = inventarioService.generarReporteInventario();
+        return ResponseEntity.ok(reporte);
     }
 
 }

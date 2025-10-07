@@ -27,6 +27,7 @@ public class Producto {
 
     private String imagenUrl;
     private int stock;
+    private int stockMinimo;
     private boolean activo;
     private String laboratorio;
     private String principioActivo;
@@ -38,11 +39,12 @@ public class Producto {
         this.activo = true;
     }
 
-    public Producto(String nombre, String descripcion, BigDecimal precio, Categoria categoria) {
+    public Producto(String nombre, int stockMinimo, String descripcion, BigDecimal precio, Categoria categoria) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.categoria = categoria;
+        this.stockMinimo = stockMinimo;
         this.activo = true;
     }
 
