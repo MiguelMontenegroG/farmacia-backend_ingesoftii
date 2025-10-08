@@ -6,6 +6,7 @@ import com.farmacia.dto.LoginRespuesta;
 import com.farmacia.dto.RegistroUsuarioDTO;
 import com.farmacia.model.Usuario;
 import com.farmacia.repository.UsuarioRepository;
+import com.farmacia.security.JwtUtil;
 import com.farmacia.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,6 +22,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Override
     public Usuario registrarUsuario(RegistroUsuarioDTO datosRegistro) {
@@ -54,16 +58,25 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new RuntimeException("Contraseña incorrecta.");
         }
 
+        String token = jwtUtil.generateToken(usuario.getEmail(), usuario.getRol().name());
+
         return new LoginRespuesta(
                 usuario.getId(),
                 usuario.getNombre(),
                 usuario.getApellido(),
                 usuario.getEmail(),
-                usuario.getRol()
+                usuario.getRol(),
+                token
         );
     }
     @Override
     public boolean existePorEmail(String email) {
         return usuarioRepositorio.findByEmail(email).isPresent();
+    }
+
+    @Override
+    public void logout() {
+        // For stateless authentication, logout is handled on the client side
+        // This method can be used for any server-side cleanup if needed
     }
 }

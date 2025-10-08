@@ -11,5 +11,6 @@ public interface UsuarioService {
     Usuario registrarUsuario(RegistroUsuarioDTO datosRegistro);
     LoginRespuesta iniciarSesion(LoginDTO loginDTO);
     boolean existePorEmail(String email);
+    void logout();
 
 }

@@ -9,15 +9,17 @@ public class LoginRespuesta {
     private String apellido;
     private String email;
     private Rol rol;
+    private String token;
 
     public LoginRespuesta() {}
 
-    public LoginRespuesta(String id, String nombre, String apellido, String email, Rol rol) {
+    public LoginRespuesta(String id, String nombre, String apellido, String email, Rol rol, String token) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.rol = rol;
+        this.token = token;
     }
 
     public String getId() {
@@ -58,5 +60,13 @@ public class LoginRespuesta {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

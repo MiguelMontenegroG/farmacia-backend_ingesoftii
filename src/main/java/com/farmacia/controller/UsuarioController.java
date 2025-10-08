@@ -33,4 +33,10 @@ public class UsuarioController {
     public boolean verificarEmail(@PathVariable String email) {
         return usuarioServicio.existePorEmail(email);
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout() {
+        usuarioServicio.logout();
+        return ResponseEntity.ok("Logout successful");
+    }
 }
