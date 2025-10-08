@@ -41,22 +41,22 @@ public class DataLoader {
 
 
             Categoria medicamentos = new Categoria("Medicamentos", "Medicamentos de venta libre y recetados");
-            medicamentos.setImagenUrl("/images/medicamentos.jpg");
+            medicamentos.setImagenUrl("https://res.cloudinary.com/dtcpxlmbk/image/upload/v1759888620/download_jynhq1.webp");
             medicamentos.setKeywords(Arrays.asList("medicina", "fármacos", "pastillas", "jarabe"));
             medicamentos.setOrden(1);
 
             Categoria cuidadoPersonal = new Categoria("Cuidado Personal", "Productos para el cuidado e higiene personal");
-            cuidadoPersonal.setImagenUrl("/images/cuidado-personal.jpg");
+            cuidadoPersonal.setImagenUrl("https://res.cloudinary.com/dtcpxlmbk/image/upload/v1759888712/OIP_iqmfwt.webp");
             cuidadoPersonal.setKeywords(Arrays.asList("higiene", "belleza", "cuidado", "cosmética"));
             cuidadoPersonal.setOrden(2);
 
             Categoria vitaminas = new Categoria("Vitaminas y Suplementos", "Suplementos alimenticios y vitaminas");
-            vitaminas.setImagenUrl("/images/vitaminas.jpg");
+            vitaminas.setImagenUrl("https://res.cloudinary.com/dtcpxlmbk/image/upload/v1759888755/download_j2jtrh.webp");
             vitaminas.setKeywords(Arrays.asList("vitaminas", "suplementos", "minerales", "nutrición"));
             vitaminas.setOrden(3);
 
             Categoria maternidad = new Categoria("Maternidad y Bebés", "Productos para mamás y bebés");
-            maternidad.setImagenUrl("/images/maternidad.jpg");
+            maternidad.setImagenUrl("https://res.cloudinary.com/dtcpxlmbk/image/upload/v1759888808/OIP_ucsv0t.webp");
             maternidad.setKeywords(Arrays.asList("bebés", "mamás", "lactancia", "pañales"));
             maternidad.setOrden(4);
 
