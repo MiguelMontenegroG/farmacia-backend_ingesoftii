@@ -41,7 +41,7 @@ public class ItemCarrito {
         this.precio = producto.getPrecio();
         this.precioOferta = producto.getPrecioOferta();
         this.cantidad = cantidad;
-        this.imagen = producto.getImagenUrl();
+        this.imagen = producto.getImagen();
         this.stock = producto.getStock();
         this.requiereReceta = producto.isRequiereReceta();
         calcularSubtotal();

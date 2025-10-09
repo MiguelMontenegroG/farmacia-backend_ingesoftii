@@ -3,6 +3,7 @@ package com.farmacia.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,80 +13,76 @@ public class Pedido {
     private String id;
 
     @Indexed
-    private String usuarioId;
+    private String userId;
 
-    private String numeroPedido;
-    private List<ItemPedido> items;
-    private Float subtotal;
-    private Float descuento;
-    private Float costoEnvio;
-    private Float total;
-    private String estado; // PENDIENTE, PROCESANDO, ENVIADO, ENTREGADO, CANCELADO
-    private Direccion direccionEntrega;
-    private String metodoPago;
-    private String cuponAplicado;
-    private LocalDateTime fechaPedido;
-    private LocalDateTime fechaEstimadaEntrega;
-    private LocalDateTime fechaEntrega;
-    private String observaciones;
+    private List<OrderItem> items;
+    private BigDecimal subtotal;
+    private BigDecimal tax; // impuestos
+    private BigDecimal shipping; // envío
+    private BigDecimal total;
+    private String status; // "pending", "processing", "shipped", "delivered", "cancelled"
+    private String paymentMethod;
+    private com.farmacia.dto.DireccionDTO shippingAddress;
+    private com.farmacia.dto.DireccionDTO billingAddress;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime estimatedDelivery;
+    private String trackingNumber;
 
     // Constructores
     public Pedido() {}
 
-    public Pedido(String usuarioId, String numeroPedido) {
-        this.usuarioId = usuarioId;
-        this.numeroPedido = numeroPedido;
-        this.fechaPedido = LocalDateTime.now();
-        this.estado = "PENDIENTE";
+    public Pedido(String userId) {
+        this.userId = userId;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+        this.status = "pending";
     }
 
     // Getters y Setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
-    public String getUsuarioId() { return usuarioId; }
-    public void setUsuarioId(String usuarioId) { this.usuarioId = usuarioId; }
+    public String getUserId() { return userId; }
+    public void setUserId(String userId) { this.userId = userId; }
 
-    public String getNumeroPedido() { return numeroPedido; }
-    public void setNumeroPedido(String numeroPedido) { this.numeroPedido = numeroPedido; }
+    public List<OrderItem> getItems() { return items; }
+    public void setItems(List<OrderItem> items) { this.items = items; }
 
-    public List<ItemPedido> getItems() { return items; }
-    public void setItems(List<ItemPedido> items) { this.items = items; }
+    public BigDecimal getSubtotal() { return subtotal; }
+    public void setSubtotal(BigDecimal subtotal) { this.subtotal = subtotal; }
 
-    public Float getSubtotal() { return subtotal; }
-    public void setSubtotal(Float subtotal) { this.subtotal = subtotal; }
+    public BigDecimal getTax() { return tax; }
+    public void setTax(BigDecimal tax) { this.tax = tax; }
 
-    public Float getDescuento() { return descuento; }
-    public void setDescuento(Float descuento) { this.descuento = descuento; }
+    public BigDecimal getShipping() { return shipping; }
+    public void setShipping(BigDecimal shipping) { this.shipping = shipping; }
 
-    public Float getCostoEnvio() { return costoEnvio; }
-    public void setCostoEnvio(Float costoEnvio) { this.costoEnvio = costoEnvio; }
+    public BigDecimal getTotal() { return total; }
+    public void setTotal(BigDecimal total) { this.total = total; }
 
-    public Float getTotal() { return total; }
-    public void setTotal(Float total) { this.total = total; }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 
-    public String getEstado() { return estado; }
-    public void setEstado(String estado) { this.estado = estado; }
+    public String getPaymentMethod() { return paymentMethod; }
+    public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }
 
-    public Direccion getDireccionEntrega() { return direccionEntrega; }
-    public void setDireccionEntrega(Direccion direccionEntrega) { this.direccionEntrega = direccionEntrega; }
+    public com.farmacia.dto.DireccionDTO getShippingAddress() { return shippingAddress; }
+    public void setShippingAddress(com.farmacia.dto.DireccionDTO shippingAddress) { this.shippingAddress = shippingAddress; }
 
-    public String getMetodoPago() { return metodoPago; }
-    public void setMetodoPago(String metodoPago) { this.metodoPago = metodoPago; }
+    public com.farmacia.dto.DireccionDTO getBillingAddress() { return billingAddress; }
+    public void setBillingAddress(com.farmacia.dto.DireccionDTO billingAddress) { this.billingAddress = billingAddress; }
 
-    public String getCuponAplicado() { return cuponAplicado; }
-    public void setCuponAplicado(String cuponAplicado) { this.cuponAplicado = cuponAplicado; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
-    public LocalDateTime getFechaPedido() { return fechaPedido; }
-    public void setFechaPedido(LocalDateTime fechaPedido) { this.fechaPedido = fechaPedido; }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 
-    public LocalDateTime getFechaEstimadaEntrega() { return fechaEstimadaEntrega; }
-    public void setFechaEstimadaEntrega(LocalDateTime fechaEstimadaEntrega) { this.fechaEstimadaEntrega = fechaEstimadaEntrega; }
+    public LocalDateTime getEstimatedDelivery() { return estimatedDelivery; }
+    public void setEstimatedDelivery(LocalDateTime estimatedDelivery) { this.estimatedDelivery = estimatedDelivery; }
 
-    public LocalDateTime getFechaEntrega() { return fechaEntrega; }
-    public void setFechaEntrega(LocalDateTime fechaEntrega) { this.fechaEntrega = fechaEntrega; }
-
-    public String getObservaciones() { return observaciones; }
-    public void setObservaciones(String observaciones) { this.observaciones = observaciones; }
+    public String getTrackingNumber() { return trackingNumber; }
+    public void setTrackingNumber(String trackingNumber) { this.trackingNumber = trackingNumber; }
 }
 

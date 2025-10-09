@@ -160,7 +160,7 @@ public class CatalogoController {
         dto.setEnOferta(producto.isEnOferta());
         dto.setCategoriaId(producto.getCategoria() != null ? producto.getCategoria().getId() : null);
         dto.setCategoriaNombre(producto.getCategoria() != null ? producto.getCategoria().getNombre() : null);
-        dto.setImagenUrl(producto.getImagenUrl());
+        dto.setImagen(producto.getImagen());
         dto.setStock(producto.getStock());
         dto.setLaboratorio(producto.getLaboratorio());
         dto.setPrincipioActivo(producto.getPrincipioActivo());

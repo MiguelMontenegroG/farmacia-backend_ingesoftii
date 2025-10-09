@@ -180,7 +180,7 @@ public class DataLoader {
         producto.setPrecioOferta(precioOferta);
         producto.setEnOferta(enOferta);
         producto.setCategoria(categoria);
-        producto.setImagenUrl(imagenUrl);
+        producto.setImagen(imagenUrl);
         producto.setStock(stock);
         producto.setLaboratorio(laboratorio);
         producto.setPrincipioActivo(principioActivo);

@@ -25,7 +25,7 @@ public class Producto {
     @DBRef
     private Categoria categoria;
 
-    private String imagenUrl;
+    private String imagen;
     private int stock;
     private int stockMinimo;
     private boolean activo;

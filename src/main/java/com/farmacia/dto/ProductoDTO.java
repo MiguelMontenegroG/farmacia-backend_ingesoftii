@@ -11,7 +11,7 @@ public class ProductoDTO {
     private boolean enOferta;
     private String categoriaId;
     private String categoriaNombre;
-    private String imagenUrl;
+    private String imagen;
     private int stock;
     private String laboratorio;
     private String principioActivo;
@@ -24,7 +24,7 @@ public class ProductoDTO {
 
     public ProductoDTO(String id, String nombre, String descripcion, BigDecimal precio,
                        BigDecimal precioOferta, boolean enOferta, String categoriaId,
-                       String categoriaNombre, String imagenUrl, int stock,
+                       String categoriaNombre, String imagen, int stock,
                        String laboratorio, String principioActivo, String codigoBarras,
                        boolean requiereReceta,boolean activo) {
         this.id = id;
@@ -35,7 +35,7 @@ public class ProductoDTO {
         this.enOferta = enOferta;
         this.categoriaId = categoriaId;
         this.categoriaNombre = categoriaNombre;
-        this.imagenUrl = imagenUrl;
+        this.imagen = imagen;
         this.stock = stock;
         this.laboratorio = laboratorio;
         this.principioActivo = principioActivo;
@@ -68,8 +68,8 @@ public class ProductoDTO {
     public String getCategoriaNombre() { return categoriaNombre; }
     public void setCategoriaNombre(String categoriaNombre) { this.categoriaNombre = categoriaNombre; }
 
-    public String getImagenUrl() { return imagenUrl; }
-    public void setImagenUrl(String imagenUrl) { this.imagenUrl = imagenUrl; }
+    public String getImagen() { return imagen; }
+    public void setImagen(String imagen) { this.imagen = imagen; }
 
     public int getStock() { return stock; }
     public void setStock(int stock) { this.stock = stock; }

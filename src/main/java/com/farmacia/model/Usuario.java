@@ -25,6 +25,9 @@ public class Usuario {
     private String telefono;
     private String password;
     private Rol rol;
+    private String direccion;
+    private boolean activo;
+    private LocalDateTime fechaRegistro;
 
     public Usuario() {}
 
