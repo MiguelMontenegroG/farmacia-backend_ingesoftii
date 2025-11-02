@@ -5,12 +5,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -28,8 +24,8 @@ public class Usuario {
     private String direccion;
     private boolean activo;
     private LocalDateTime fechaRegistro;
-
-    public Usuario() {}
+    private boolean verificado = false;
+    private String codigoVerificacion;
 
     public Usuario(String nombre, String apellido, String email, String telefono, String password, Rol rol) {
         this.nombre = nombre;
@@ -38,7 +34,10 @@ public class Usuario {
         this.telefono = telefono;
         this.password = password;
         this.rol = rol;
+        this.activo = true;
+        this.fechaRegistro = LocalDateTime.now();
     }
+
 
     public String getId() {
         return id;
@@ -94,5 +93,29 @@ public class Usuario {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public boolean isVerificado() {
+        return verificado;
+    }
+
+    public void setVerificado(boolean verificado) {
+        this.verificado = verificado;
+    }
+
+    public String getCodigoVerificacion() {
+        return codigoVerificacion;
+    }
+
+    public void setCodigoVerificacion(String codigoVerificacion) {
+        this.codigoVerificacion = codigoVerificacion;
     }
 }

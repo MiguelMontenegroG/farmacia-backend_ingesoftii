@@ -1,5 +1,8 @@
 package com.farmacia.security;
 
+import java.util.List;
+
+import com.farmacia.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,8 +13,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -25,24 +26,43 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http
-                // ✅ Habilitar CORS antes de todo
-                .cors().and()
                 .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        //Rutas públicas (sin autenticación)
                         .requestMatchers(
                                 "/api/usuarios/registro",
                                 "/api/usuarios/login",
+                                "/api/usuarios/verificar-codigo",
                                 "/api/usuarios/existe/**",
-                                "/logout",
                                 "/swagger-ui.html", "/swagger-ui/**",
                                 "/v3/api-docs/**", "/api-docs/**",
-                                "/api/catalogo/**", "/api/categorias/**",
-                                "/api/productos/**", "/api/imagenes/**"
+                                "/api/productos/**",
+                                "/api/categorias/**",
+                                "/api/imagenes/**",
+                                "/error"
                         ).permitAll()
+
+                        //Rutas solo para administradores
+                        .requestMatchers(
+                                "/api/usuarios/todos",
+                                "/api/usuarios/cambiar-rol/**",
+                                "/api/usuarios/eliminar-admin/**"
+                        ).hasRole("ADMIN")
+
+                        //Rutas básicas de usuario autenticado
+                        .requestMatchers(
+                                "/api/usuarios/perfil/**",
+                                "/api/usuarios/actualizar/**",
+                                "/api/usuarios/eliminar/**"
+                        ).hasAnyRole("CLIENTE", "ADMIN")
+
+                        //Todo lo demás requiere autenticación
                         .anyRequest().authenticated()
                 )
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin(form -> form.disable())
                 .httpBasic(httpBasic -> httpBasic.disable());
@@ -50,13 +70,14 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // Bean de configuración CORS (clave)
+    // Configuración global CORS
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+        configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
+        configuration.setExposedHeaders(List.of("Authorization"));
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
