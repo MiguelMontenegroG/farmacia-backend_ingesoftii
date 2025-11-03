@@ -35,6 +35,8 @@ public class SecurityConfig {
                         //Rutas públicas (sin autenticación)
                         .requestMatchers(
                                 "/api/usuarios/registro",
+                                "/api/favoritos/**",
+
                                 "/api/usuarios/login",
                                 "/api/usuarios/verificar-codigo",
                                 "/api/usuarios/existe/**",
