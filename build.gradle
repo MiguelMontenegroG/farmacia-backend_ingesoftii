@@ -74,6 +74,24 @@ dependencies {
 
 }
 
+// Tarea para construir el jar sin ejecutar tests
+jar {
+    enabled = true
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes(
+                'Main-Class': 'com.farmacia.FarmaciaApplication'
+        )
+    }
+}
+
+// Tarea para crear el jar ejecutable
+bootJar {
+    enabled = true
+    archiveFileName = 'FarmaciaIngeSonftII-0.0.1-SNAPSHOT.jar'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
 // Desactivar completamente las tareas de test
 test {
     enabled = false

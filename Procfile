@@ -1,1 +1,1 @@
-web: ./gradlew bootRun
+web: java -Dserver.port=$PORT -jar build/libs/FarmaciaIngeSonftII-0.0.1-SNAPSHOT.jar

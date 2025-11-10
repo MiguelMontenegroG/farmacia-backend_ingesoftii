@@ -1,0 +1,39 @@
+[33m4775ba2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32majuste-backend[m[33m, [m[1;31morigin/ajuste-backend[m[33m)[m Configuracions BCryptPasswordEncoder
+[33m53156c9[m Cambios configuracion automatica mongo
+[33mb2254f8[m dataloader
+[33ma28fe3a[m Actualizacion del dataloader y properties
+[33m6d94952[m Actualizacion del dataloader y properties
+[33m3adbc83[m Actualizacion dockerfile
+[33m1eed9f2[m Actualizacion dockerfile
+[33m74bd7a5[m Actualizacion dockerfile
+[33m30f3a8b[m Actualizacion dockerfile
+[33m37c8c0f[m Actualizacion dockerfile
+[33m45980d4[m Bases para el despliegue
+[33m225cc04[m Comentarios funcionales
+[33m6e9e467[m Por si acaso (no creo)
+[33mfb974a3[m[33m ([m[1;32majuste-backend-copilot[m[33m)[m Metodos pasarela de pagos, conexión con back y con el front, modificación en seguridad y atributos
+[33mf8a2240[m Mini arreglo a bug de acceso a catalogo catalogo
+[33mcb1a6a5[m Funcionalidad cerrar sesión incluida en swagger
+[33m6441b98[m Imagenes para categorias
+[33mfb7071f[m Organización categoria paquetes
+[33m30de40d[m Alerta y reporte de stock
+[33m553ff16[m Carrito funcional con frontend y data para usuarios
+[33m6b2482d[m Carrito Completo
+[33m934216f[m Revert "Carrito completo"
+[33m94d1e4f[m Carrito completo
+[33mce7ab3e[m Cambios en filtros
+[33mfd29f2f[m Usuario
+[33m61f1053[m Organización de paquetes
+[33mdae305a[m Clases para la gestión de pago
+[33m38ad4d9[m Clases para la gestión de inventario
+[33mf4df82e[m DataLoader completo
+[33m6601e8a[m Correción error categorias
+[33m7eac588[m Catalogo funciona con frontend
+[33mb89d1d3[m pequeños cambios crear
+[33m35b50ac[m CorsConfig para conectar mas facil con next.js
+[33m82bfc4d[m Servicio de imagenes funcional
+[33m51867b7[m Api crear producto
+[33m6949528[m clases adicionales
+[33mce6d1d2[m Modelo de clases completo
+[33md30b41b[m Base del codigo, dataset de pruebas (no testeado) seguridad deshabilitada, carga en swagger
+[33mbb80135[m Primer commit - proyecto farmacia
