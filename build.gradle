@@ -43,8 +43,8 @@ dependencies {
     // runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
     // runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
-    // Swagger/OpenAPI
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+    // Swagger/OpenAPI - Usando una versión diferente que puede evitar el problema
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 
     // Groovy
     implementation 'org.apache.groovy:groovy-all:4.0.15'
@@ -99,4 +99,9 @@ test {
 
 tasks.named('test') {
     enabled = false
+}
+
+// Asegurar que las propiedades se procesen correctamente
+processResources {
+    filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: [version: project.version])
 }
