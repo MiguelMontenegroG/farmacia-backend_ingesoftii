@@ -10,8 +10,8 @@ WORKDIR /app
 # Copiar todos los archivos del proyecto
 COPY . .
 
-# Compilar la aplicación con Gradle excluyendo tests
-RUN gradle build -x test --no-daemon
+# Compilar la aplicación con Gradle excluyendo tests y crear un JAR ejecutable
+RUN gradle bootJar -x test --no-daemon
 
 # Listar los archivos JAR generados para depuración
 RUN ls -la build/libs/
@@ -20,5 +20,4 @@ RUN ls -la build/libs/
 EXPOSE ${PORT:-8080}
 
 # Ejecutar la aplicación cuando el contenedor se inicie
-# Usar el JAR que no es "plain" (tiene todas las dependencias)
-ENTRYPOINT ["sh", "-c", "java -Dserver.port=${PORT:-8080} -jar build/libs/*[!plain].jar"]
+ENTRYPOINT ["sh", "-c", "java -Dserver.port=${PORT:-8080} -jar build/libs/FarmaciaIngeSonftII-0.0.1-SNAPSHOT.jar"]
