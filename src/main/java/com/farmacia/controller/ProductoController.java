@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://127.0.0.1:3000", "https://*.vercel.app"}, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/productos")
 public class ProductoController {
@@ -23,7 +23,7 @@ public class ProductoController {
 
 
     @GetMapping("obtener-productos")
-    public ResponseEntity<List<ProductoDTO>> getProductos(FiltroProductoDTO filtros) {
+    public ResponseEntity<List<ProductoDTO>> getProductos(@ModelAttribute FiltroProductoDTO filtros) {
         try {
             List<ProductoDTO> productosDTO = productoService.filtrarProductos(filtros)
                     .stream()

@@ -8,4 +8,7 @@ import java.util.List;
 @Repository
 public interface PedidoRepository extends MongoRepository<Pedido, String> {
     List<Pedido> findByUserId(String userId);
+    
+    // Método adicional para obtener todos los pedidos
+    List<Pedido> findAll();
 }

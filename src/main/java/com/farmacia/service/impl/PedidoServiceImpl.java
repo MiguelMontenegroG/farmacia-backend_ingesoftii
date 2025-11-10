@@ -86,4 +86,10 @@ public class PedidoServiceImpl implements PedidoService {
         return pedidoRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Pedido no encontrado: " + orderId));
     }
+    
+    // Implementación del método adicional necesario para AdminController
+    @Override
+    public List<Pedido> obtenerTodosPedidos() {
+        return pedidoRepository.findAll();
+    }
 }

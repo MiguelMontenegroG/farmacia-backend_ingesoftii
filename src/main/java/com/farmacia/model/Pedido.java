@@ -63,6 +63,10 @@ public class Pedido {
 
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+    
+    // Método adicional para compatibilidad con AdminController
+    public String getEstado() { return status; }
+    public void setEstado(String estado) { this.status = estado; }
 
     public String getPaymentMethod() { return paymentMethod; }
     public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }
@@ -75,6 +79,10 @@ public class Pedido {
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    
+    // Método adicional para compatibilidad con AdminController
+    public LocalDateTime getFechaCreacion() { return createdAt; }
+    public void setFechaCreacion(LocalDateTime fechaCreacion) { this.createdAt = fechaCreacion; }
 
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
@@ -85,4 +93,3 @@ public class Pedido {
     public String getTrackingNumber() { return trackingNumber; }
     public void setTrackingNumber(String trackingNumber) { this.trackingNumber = trackingNumber; }
 }
-

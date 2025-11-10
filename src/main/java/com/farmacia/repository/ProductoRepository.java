@@ -25,4 +25,11 @@ public interface ProductoRepository extends MongoRepository<Producto, String> {
 
     @Query("{'laboratorio': {$regex: ?0, $options: 'i'}, 'activo': true}")
     List<Producto> findByLaboratorioContainingIgnoreCase(String laboratorio);
+
+    @Query("{'$or': [" +
+           "  {'nombre': {$regex: ?0, $options: 'i'}}," +
+           "  {'descripcion': {$regex: ?0, $options: 'i'}}," +
+           "  {'principioActivo': {$regex: ?0, $options: 'i'}}" +
+           "], 'activo': true}")
+    List<Producto> buscarPorTermino(String termino);
 }

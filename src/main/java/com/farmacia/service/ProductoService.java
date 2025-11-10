@@ -30,6 +30,9 @@ public interface ProductoService {
 
     List<Producto> filtrarProductos(FiltroProductoDTO filtros);
     
+    // Métodos adicionales necesarios para AdminController
+    List<Producto> obtenerProductos();
+    
     // Métodos para gestión de ofertas
     List<Oferta> obtenerTodasLasOfertas();
     Oferta crearOferta(Oferta oferta);

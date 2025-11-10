@@ -87,9 +87,9 @@ public class ProductoServiceImpl implements ProductoService {
     public List<Producto> filtrarProductos(FiltroProductoDTO filtros) {
         List<Producto> productos;
 
-
+        // Búsqueda por término (nombre, descripción o principio activo)
         if (filtros.getBusqueda() != null && !filtros.getBusqueda().trim().isEmpty()) {
-            productos = productoRepository.findByNombreContainingIgnoreCase(filtros.getBusqueda());
+            productos = productoRepository.buscarPorTermino(filtros.getBusqueda());
         } else if (filtros.getCategoriaId() != null && !filtros.getCategoriaId().trim().isEmpty()) {
             productos = productoRepository.findByCategoriaId(filtros.getCategoriaId());
         } else {
@@ -159,6 +159,12 @@ public class ProductoServiceImpl implements ProductoService {
         }
 
         return producto.getPrecio();
+    }
+    
+    // Implementación del método adicional necesario para AdminController
+    @Override
+    public List<Producto> obtenerProductos() {
+        return productoRepository.findAll();
     }
     
     // Implementación de métodos para gestión de ofertas

@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: farmacia-backend
+    env: docker
+    plan: free
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+      - key: PORT
+        value: 8080

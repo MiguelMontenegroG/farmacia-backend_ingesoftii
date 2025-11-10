@@ -21,13 +21,21 @@ public class Usuario {
     private String id;
     private String nombre;
     private String apellido;
+    @Indexed(unique = true)
     private String email;
     private String telefono;
     private String password;
     private Rol rol;
     private String direccion;
+    private String ciudad;
+    private String estado;
+    private String codigoPostal;
     private boolean activo;
     private LocalDateTime fechaRegistro;
+    private LocalDateTime fechaUltimaActualizacion;
+    private Integer totalCompras;
+    private Double montoTotalCompras;
+    private List<String> prescripciones;
 
     public Usuario() {}
 

@@ -12,6 +12,7 @@ public class CategoriaDTO {
     private List<String> keywords;
     private int orden;
     private boolean esCategoriaRaiz;
+    private long productCount; // Nuevo campo para contar productos
 
     // Constructores
     public CategoriaDTO() {}
@@ -57,4 +58,7 @@ public class CategoriaDTO {
 
     public boolean isEsCategoriaRaiz() { return esCategoriaRaiz; }
     public void setEsCategoriaRaiz(boolean esCategoriaRaiz) { this.esCategoriaRaiz = esCategoriaRaiz; }
+    
+    public long getProductCount() { return productCount; }
+    public void setProductCount(long productCount) { this.productCount = productCount; }
 }

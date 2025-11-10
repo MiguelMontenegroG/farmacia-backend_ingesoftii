@@ -4,6 +4,7 @@ import com.farmacia.dto.CategoriaDTO;
 import com.farmacia.model.Categoria;
 import com.farmacia.repository.CategoriaRepository;
 import com.farmacia.service.CategoriaService;
+import com.farmacia.repository.ProductoRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/categorias")
 @Tag(name = "Categorías", description = "API para gestión de categorías de productos")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://127.0.0.1:3000", "https://*.vercel.app"}, allowCredentials = "true")
 public class CategoriaController {
 
     @Autowired
@@ -27,6 +28,9 @@ public class CategoriaController {
     
     @Autowired
     private CategoriaRepository categoriaRepository;
+    
+    @Autowired
+    private ProductoRepository productoRepository;
 
     @Operation(summary = "Endpoint de prueba para verificar la conexión con MongoDB Atlas")
     @ApiResponses(value = {
@@ -139,6 +143,10 @@ public class CategoriaController {
         dto.setKeywords(categoria.getKeywords());
         dto.setOrden(categoria.getOrden());
         dto.setEsCategoriaRaiz(categoria.esCategoriaRaiz());
+
+        // Contar productos en esta categoría
+        long productCount = productoRepository.findByCategoriaId(categoria.getId()).size();
+        dto.setProductCount(productCount);
 
         if (categoria.getCategoriaPadre() != null) {
             dto.setCategoriaPadreId(categoria.getCategoriaPadre().getId());
