@@ -11,10 +11,13 @@ WORKDIR /app
 COPY . .
 
 # Compilar la aplicación con Gradle excluyendo tests
-RUN gradle build -x test --no-daemon
+RUN gradle build -x test --no-daemon --info
+
+# Encontrar el archivo JAR generado
+RUN find build/libs -name "*.jar" -type f
 
 # Exponer el puerto en el que la aplicación correrá
 EXPOSE ${PORT:-8080}
 
 # Ejecutar la aplicación cuando el contenedor se inicie
-ENTRYPOINT ["java", "-Dserver.port=${PORT:-8080}", "-jar", "build/libs/*.jar"]
+ENTRYPOINT ["sh", "-c", "java -Dserver.port=${PORT:-8080} -jar $(find build/libs -name '*.jar' -type f)"]
