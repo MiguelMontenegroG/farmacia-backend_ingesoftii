@@ -8,8 +8,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class CorsConfig {
-    
-    @Value("${cors.allowed.origins:http://localhost:3000}")
+
+    // Se pueden definir orígenes permitidos desde application.properties
+    @Value("${cors.allowed.origins:http://localhost:3000,https://farmaciafront-gamma.vercel.app}")
     private String[] allowedOrigins;
 
     @Bean
@@ -17,7 +18,7 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
+                registry.addMapping("/**") // Aplica CORS a todos los endpoints
                         .allowedOriginPatterns(allowedOrigins)
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
