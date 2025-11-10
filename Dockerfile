@@ -1,35 +1,20 @@
-# Usar imagen oficial de OpenJDK 17
-FROM eclipse-temurin:17-jdk-alpine AS builder
+#Usar imagen oficial de OpenJDK 17
+FROM eclipse-temurin:17-jdk-alpine
 
-# Instalar dependencias necesarias
-RUN apk add --no-cache bash
-
-# Establecer el directorio de trabajo dentro del contenedor
-WORKDIR /app
-
-# Copiar los archivos de configuración de Gradle
-COPY build.gradle settings.gradle ./
-
-# Copiar el código fuente
-COPY src/ src/
-
-# Compilar la aplicación
-RUN ./gradlew build --no-daemon -x test
-
-# Etapa de ejecución
-FROM eclipse-temurin:17-jre-alpine
-
-# Instalar dependencias necesarias
-RUN apk add --no-cache bash
+# Instalar Gradle
+RUN apk add --no-cache bash gradle
 
 # Establecer el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copiar el JAR generado en la etapa anterior
-COPY --from=builder /app/build/libs/*.jar app.jar
+# Copiar todos los archivos del proyecto
+COPY . .
+
+# Compilar laaplicación con Gradle
+RUN gradle build -x test --no-daemon
 
 # Exponer el puerto en el que la aplicación correrá
 EXPOSE ${PORT:-8080}
 
 # Ejecutar la aplicación cuando el contenedor se inicie
-ENTRYPOINT ["java", "-Dserver.port=${PORT:-8080}", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Dserver.port=${PORT:-8080}", "-jar", "build/libs/*.jar"]
