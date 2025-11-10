@@ -1,4 +1,4 @@
-#Usar imagen oficial de OpenJDK 17
+# Usar imagen oficial de OpenJDK 17
 FROM eclipse-temurin:17-jdk-alpine
 
 # Instalar Gradle
@@ -10,7 +10,7 @@ WORKDIR /app
 # Copiar todos los archivos del proyecto
 COPY . .
 
-# Compilar laaplicación con Gradle
+# Compilar la aplicación con Gradle excluyendo tests
 RUN gradle build -x test --no-daemon
 
 # Exponer el puerto en el que la aplicación correrá
