@@ -2,6 +2,7 @@ package com.farmacia.controller;
 
 import com.farmacia.dto.CategoriaDTO;
 import com.farmacia.model.Categoria;
+import com.farmacia.repository.CategoriaRepository;
 import com.farmacia.service.CategoriaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -23,6 +24,19 @@ public class CategoriaController {
 
     @Autowired
     private CategoriaService categoriaService;
+    
+    @Autowired
+    private CategoriaRepository categoriaRepository;
+
+    @Operation(summary = "Endpoint de prueba para verificar la conexión con MongoDB Atlas")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Conexión verificada exitosamente")
+    })
+    @GetMapping("/test")
+    public ResponseEntity<String> testConnection() {
+        long count = categoriaRepository.count();
+        return ResponseEntity.ok("Conexión MongoDB Atlas OK. Total categorías: " + count);
+    }
 
     @Operation(summary = "Obtener todas las categorías activas")
     @ApiResponses(value = {

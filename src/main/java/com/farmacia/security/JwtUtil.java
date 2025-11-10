@@ -1,53 +1,41 @@
 package com.farmacia.security;
 
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
-
-import java.security.Key;
-import java.util.Date;
 
 @Component
 public class JwtUtil {
 
-    private static final String SECRET_KEY = "mySecretKeyForJwtTokenGenerationThatIsLongEnough"; // Use a secure key in production
-    private static final long EXPIRATION_TIME = 86400000; // 1 day in milliseconds
+    // En el entorno académico, se ha eliminado la funcionalidad JWT
+    // Esta clase se mantiene como un componente vacío para evitar errores de compilación
+    // en otras partes del código que puedan depender de ella
 
-    private Key getSigningKey() {
-        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
-    }
-
-    public String generateToken(String username, String role) {
-        return Jwts.builder()
-                .setSubject(username)
-                .claim("role", role)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
-                .compact();
+    public String generateToken(String username, String role, String userId) {
+        // En entorno académico, no generamos tokens reales
+        return "dummy-token-for-academic-environment";
     }
 
     public String extractUsername(String token) {
-        return extractClaims(token).getSubject();
+        // En entorno académico, devolvemos un nombre de usuario fijo
+        return "usuario-prueba";
     }
 
     public String extractRole(String token) {
-        return extractClaims(token).get("role", String.class);
+        // En entorno académico, devolvemos un rol fijo
+        return "CLIENTE";
+    }
+
+    public String extractUserId(String token) {
+        // En entorno académico, devolvemos un ID de usuario fijo
+        return "usuario-prueba-id";
     }
 
     public boolean isTokenExpired(String token) {
-        return extractClaims(token).getExpiration().before(new Date());
+        // En entorno académico, los tokens nunca expiran
+        return false;
     }
 
     public boolean validateToken(String token, String username) {
-        return (username.equals(extractUsername(token)) && !isTokenExpired(token));
-    }
-
-    private Claims extractClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        // En entorno académico, todos los tokens son válidos
+        return true;
     }
 }

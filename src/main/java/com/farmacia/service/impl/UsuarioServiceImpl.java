@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
@@ -25,6 +27,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private JwtUtil jwtUtil;
+    
+    // Almacenamiento temporal de tokens invalidados (en producción usar Redis o DB)
+    private Set<String> invalidatedTokens = new HashSet<>();
 
     @Override
     public Usuario registrarUsuario(RegistroUsuarioDTO datosRegistro) {
@@ -58,7 +63,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new RuntimeException("Contraseña incorrecta.");
         }
 
-        String token = jwtUtil.generateToken(usuario.getEmail(), usuario.getRol().name());
+        String token = jwtUtil.generateToken(usuario.getEmail(), usuario.getRol().name(), usuario.getId());
 
         return new LoginRespuesta(
                 usuario.getId(),
@@ -76,7 +81,39 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void logout() {
-        // For stateless authentication, logout is handled on the client side
-        // This method can be used for any server-side cleanup if needed
+        // Para autenticación sin estado, el cierre de sesión se maneja principalmente en el cliente
+        // Este método puede usarse para cualquier limpieza del lado del servidor si es necesario
+        // En una implementación más completa, se almacenarían los tokens invalidados
+    }
+    
+    public void invalidateToken(String token) {
+        invalidatedTokens.add(token);
+    }
+    
+    public boolean isTokenInvalidated(String token) {
+        return invalidatedTokens.contains(token);
+    }
+    
+    // Implementación de métodos para gestión de cuenta
+    @Override
+    public Usuario actualizarUsuario(String id, Usuario usuario) {
+        Optional<Usuario> usuarioExistente = usuarioRepositorio.findById(id);
+        if (usuarioExistente.isPresent()) {
+            Usuario u = usuarioExistente.get();
+            u.setNombre(usuario.getNombre());
+            u.setApellido(usuario.getApellido());
+            u.setEmail(usuario.getEmail());
+            u.setTelefono(usuario.getTelefono());
+            // No actualizamos la contraseña aquí por seguridad
+            return usuarioRepositorio.save(u);
+        } else {
+            throw new RuntimeException("Usuario no encontrado con ID: " + id);
+        }
+    }
+    
+    @Override
+    public Usuario obtenerUsuarioPorId(String id) {
+        return usuarioRepositorio.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
     }
 }

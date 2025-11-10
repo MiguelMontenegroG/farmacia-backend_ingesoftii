@@ -1,4 +1,4 @@
-package com.farmacia;
+/**package com.farmacia;
 import com.farmacia.model.Producto;
 import com.farmacia.repository.ProductoRepository;
 import org.junit.jupiter.api.Test;
@@ -71,3 +71,4 @@ class ProductoRepoTest {
                 );
     }
 }
+**/

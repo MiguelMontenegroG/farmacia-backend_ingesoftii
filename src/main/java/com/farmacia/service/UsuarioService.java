@@ -12,5 +12,9 @@ public interface UsuarioService {
     LoginRespuesta iniciarSesion(LoginDTO loginDTO);
     boolean existePorEmail(String email);
     void logout();
+    
+    // Métodos para gestión de cuenta
+    Usuario actualizarUsuario(String id, Usuario usuario);
+    Usuario obtenerUsuarioPorId(String id);
 
 }

@@ -1,6 +1,7 @@
 package com.farmacia.service.impl;
 
 import com.farmacia.dto.FiltroProductoDTO;
+import com.farmacia.model.Oferta;
 import com.farmacia.model.Producto;
 import com.farmacia.repository.ProductoRepository;
 import com.farmacia.service.ProductoService;
@@ -158,5 +159,33 @@ public class ProductoServiceImpl implements ProductoService {
         }
 
         return producto.getPrecio();
+    }
+    
+    // Implementación de métodos para gestión de ofertas
+    @Override
+    public List<Oferta> obtenerTodasLasOfertas() {
+        // Esta implementación es un placeholder
+        // En una implementación completa, se conectaría con un repositorio de ofertas
+        return List.of();
+    }
+    
+    @Override
+    public Oferta crearOferta(Oferta oferta) {
+        // Esta implementación es un placeholder
+        // En una implementación completa, se guardaría la oferta en un repositorio
+        return oferta;
+    }
+    
+    @Override
+    public Oferta actualizarOferta(String id, Oferta oferta) {
+        // Esta implementación es un placeholder
+        // En una implementación completa, se actualizaría la oferta en un repositorio
+        return oferta;
+    }
+    
+    @Override
+    public void eliminarOferta(String id) {
+        // Esta implementación es un placeholder
+        // En una implementación completa, se eliminaría la oferta de un repositorio
     }
 }

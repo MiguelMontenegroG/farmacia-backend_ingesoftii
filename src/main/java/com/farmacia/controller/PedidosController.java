@@ -6,8 +6,6 @@ import com.farmacia.model.Pedido;
 import com.farmacia.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,8 +20,8 @@ public class PedidosController {
     @PostMapping("/crear")
     public ResponseEntity<ApiResponse<Pedido>> crearPedido(@RequestBody CheckoutDataDTO checkoutData) {
         try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String userId = authentication.getName(); // Assuming the principal is the userId
+            // En entorno académico, usamos un ID de usuario fijo para pruebas
+            String userId = "usuario-prueba-id";
             Pedido pedido = pedidoService.crearPedido(userId, checkoutData);
             return ResponseEntity.ok(new ApiResponse<>(true, "Pedido creado exitosamente", pedido));
         } catch (Exception e) {

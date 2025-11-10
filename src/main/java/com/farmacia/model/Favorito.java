@@ -1,44 +1,34 @@
 package com.farmacia.model;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import java.time.LocalDateTime;
-import java.util.List;
+import org.springframework.data.annotation.CreatedDate;
 
+import java.time.LocalDateTime;
+
+@Data
+@EqualsAndHashCode(callSuper = false)
 @Document(collection = "favoritos")
 public class Favorito {
+
     @Id
     private String id;
 
-    @Indexed
     private String usuarioId;
+    private String productoId;
 
-    private List<String> productosIds;
-    private LocalDateTime fechaCreacion;
-    private LocalDateTime fechaActualizacion;
+    @CreatedDate
+    private LocalDateTime fechaAgregado;
 
-    // Constructores
+    // Constructor vacío
     public Favorito() {}
 
-    public Favorito(String usuarioId) {
+    // Constructor con parámetros
+    public Favorito(String usuarioId, String productoId) {
         this.usuarioId = usuarioId;
-        this.fechaCreacion = LocalDateTime.now();
+        this.productoId = productoId;
+        this.fechaAgregado = LocalDateTime.now();
     }
-
-    // Getters y Setters
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
-
-    public String getUsuarioId() { return usuarioId; }
-    public void setUsuarioId(String usuarioId) { this.usuarioId = usuarioId; }
-
-    public List<String> getProductosIds() { return productosIds; }
-    public void setProductosIds(List<String> productosIds) { this.productosIds = productosIds; }
-
-    public LocalDateTime getFechaCreacion() { return fechaCreacion; }
-    public void setFechaCreacion(LocalDateTime fechaCreacion) { this.fechaCreacion = fechaCreacion; }
-
-    public LocalDateTime getFechaActualizacion() { return fechaActualizacion; }
-    public void setFechaActualizacion(LocalDateTime fechaActualizacion) { this.fechaActualizacion = fechaActualizacion; }
 }

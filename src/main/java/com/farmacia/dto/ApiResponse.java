@@ -20,7 +20,17 @@ public class ApiResponse<T> {
     public ApiResponse(boolean success, String error) {
         this.success = success;
         this.error = error;
+        this.mensaje = "Error occurred";
+    }
+    
+    // Constructor vacío
+    public ApiResponse() {}
+
+    public static <T> ApiResponse<T> success(String message, T data) {
+        return new ApiResponse<>(true, message, data);
     }
 
-    public ApiResponse() {}
+    public static <T> ApiResponse<T> error(String message) {
+        return new ApiResponse<>(false, message);
+    }
 }

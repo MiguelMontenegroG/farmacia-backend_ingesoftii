@@ -46,6 +46,10 @@ public class PedidoServiceImpl implements PedidoService {
             );
             orderItems.add(orderItem);
             subtotal = subtotal.add(orderItem.getTotal());
+            
+            // Actualizar stock del producto
+            producto.setStock(producto.getStock() - item.getQuantity());
+            productoRepository.save(producto);
         }
 
         // Calculate totals

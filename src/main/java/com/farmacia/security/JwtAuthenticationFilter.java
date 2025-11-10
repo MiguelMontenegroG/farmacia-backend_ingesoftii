@@ -1,22 +1,9 @@
 package com.farmacia.security;
 
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
-
-import java.io.IOException;
-import java.util.ArrayList;
 
 @Component
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
+public class JwtAuthenticationFilter {
 
     private final JwtUtil jwtUtil;
 
@@ -24,29 +11,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.jwtUtil = jwtUtil;
     }
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-            throws ServletException, IOException {
+    // En el entorno académico, se ha eliminado la funcionalidad JWT
+    // Esta clase se mantiene como un componente vacío para evitar errores de compilación
+    // en otras partes del código que puedan depender de ella
 
-        final String authorizationHeader = request.getHeader("Authorization");
+    // Clase auxiliar para mantener compatibilidad con el código existente
+    public static class CustomUserDetails {
+        private String username;
+        private String userId;
 
-        String username = null;
-        String jwt = null;
-
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            jwt = authorizationHeader.substring(7);
-            username = jwtUtil.extractUsername(jwt);
+        public CustomUserDetails(String username, String userId) {
+            this.username = username;
+            this.userId = userId;
         }
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            if (jwtUtil.validateToken(jwt, username)) {
-                UserDetails userDetails = new User(username, "", new ArrayList<>()); // No authorities for simplicity
-                UsernamePasswordAuthenticationToken authenticationToken =
-                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-            }
+        public String getId() {
+            return userId;
         }
-        chain.doFilter(request, response);
+
+        public String getUsername() {
+            return username;
+        }
     }
 }

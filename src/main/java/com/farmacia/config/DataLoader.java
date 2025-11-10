@@ -91,7 +91,7 @@ public class DataLoader {
 
                     crearProducto("Amoxicilina 500mg", "Antibiótico de amplio espectro",
                             new BigDecimal("35000"), new BigDecimal("29000"), true, antibioticos,
-                            "https://res.cloudinary.com/dtcpxlmbk/image/upload/v1759044646/farmacia/shlwhbx36y6jitimb6vi.webp", 60, "Roche", "Amoxicilina", "7501006557043", true),
+                            "https://res.cloudinary.com/dtcpxlmbk/image/upload/v1759044646/farmac ia/shlwhbx36y6jitimb6vi.webp", 60, "Roche", "Amoxicilina", "7501006557043", true),
 
                     crearProducto("Azitromicina 500mg", "Antibiótico macrólido",
                             new BigDecimal("40000"), null, false, antibioticos,
@@ -182,6 +182,7 @@ public class DataLoader {
         producto.setCategoria(categoria);
         producto.setImagen(imagenUrl);
         producto.setStock(stock);
+        producto.setStockMinimo(10); // Establecemos un valor por defecto para stockMinimo
         producto.setLaboratorio(laboratorio);
         producto.setPrincipioActivo(principioActivo);
         producto.setCodigoBarras(codigoBarras);

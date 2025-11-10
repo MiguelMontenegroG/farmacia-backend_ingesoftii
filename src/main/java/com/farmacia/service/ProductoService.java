@@ -1,6 +1,7 @@
 package com.farmacia.service;
 
 import com.farmacia.dto.FiltroProductoDTO;
+import com.farmacia.model.Oferta;
 import com.farmacia.model.Producto;
 import java.util.List;
 import java.util.Optional;
@@ -28,4 +29,10 @@ public interface ProductoService {
     Producto obtenerPorId(String id);
 
     List<Producto> filtrarProductos(FiltroProductoDTO filtros);
+    
+    // Métodos para gestión de ofertas
+    List<Oferta> obtenerTodasLasOfertas();
+    Oferta crearOferta(Oferta oferta);
+    Oferta actualizarOferta(String id, Oferta oferta);
+    void eliminarOferta(String id);
 }

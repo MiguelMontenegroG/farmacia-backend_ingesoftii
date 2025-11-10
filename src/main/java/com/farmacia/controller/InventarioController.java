@@ -5,6 +5,8 @@ import com.farmacia.dto.ReporteInventarioDTO;
 import com.farmacia.service.InventarioService;
 import com.farmacia.dto.InventarioDTO;
 import com.farmacia.dto.ActualizarStockRequest;
+import com.farmacia.model.Producto;
+import com.farmacia.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,9 @@ public class InventarioController {
 
     @Autowired
     private InventarioService inventarioService;
+    
+    @Autowired
+    private ProductoService productoService;
 
     @GetMapping
     public ResponseEntity<List<InventarioDTO>> obtenerTodoElInventario() {
@@ -49,6 +54,14 @@ public class InventarioController {
     public ResponseEntity<InventarioDTO> disminuirStock(@PathVariable String id,
                                                         @RequestBody ActualizarStockRequest request) {
         InventarioDTO productoActualizado = inventarioService.disminuirStock(id, request);
+        return ResponseEntity.ok(productoActualizado);
+    }
+    
+    // Endpoint para actualizar completamente un producto/inventario
+    @PutMapping("/{id}")
+    public ResponseEntity<Producto> actualizarProducto(@PathVariable String id, @RequestBody Producto producto) {
+        producto.setId(id);
+        Producto productoActualizado = productoService.guardarProducto(producto);
         return ResponseEntity.ok(productoActualizado);
     }
 
