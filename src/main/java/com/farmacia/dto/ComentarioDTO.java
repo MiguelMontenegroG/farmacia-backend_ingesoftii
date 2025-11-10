@@ -1,45 +1,52 @@
-package com.farmacia.model;
+package com.farmacia.dto;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 
-@Document(collection = "comentarios")
-public class Comentario {
-    @Id
+public class ComentarioDTO {
     private String id;
-
-    @Indexed
+    
+    @NotBlank(message = "ID del producto es requerido")
     private String productoId;
-
-    @Indexed
+    
+    @NotBlank(message = "ID del usuario es requerido")
     private String usuarioId;
-
+    
+    @NotBlank(message = "Nombre del usuario es requerido")
+    @Size(min = 2, max = 50, message = "Nombre debe tener entre 2 y 50 caracteres")
     private String nombreUsuario;
-    private Integer calificacion; // 1-5 estrellas
+    
+    @Min(value = 1, message = "Calificación mínima es 1")
+    @Max(value = 5, message = "Calificación máxima es 5")
+    private Integer calificacion;
+    
+    @Size(max = 100, message = "Título no puede exceder 100 caracteres")
     private String titulo;
+    
+    @NotBlank(message = "Contenido es requerido")
+    @Size(min = 10, max = 1000, message = "Contenido debe tener entre 10 y 1000 caracteres")
     private String contenido;
+    
     private LocalDateTime fechaCreacion;
     private boolean activo;
-    private boolean flaggedAsSpam;
+    private boolean flagedAsSpam;
     private Integer reportesSpam;
 
-    // Constructores
-    public Comentario() {
-        this.flaggedAsSpam = false;
-        this.reportesSpam = 0;
-    }
+    public ComentarioDTO() {}
 
-    public Comentario(String productoId, String usuarioId, String nombreUsuario, Integer calificacion, String contenido) {
+    public ComentarioDTO(String productoId, String usuarioId, String nombreUsuario, 
+                        Integer calificacion, String titulo, String contenido) {
         this.productoId = productoId;
         this.usuarioId = usuarioId;
         this.nombreUsuario = nombreUsuario;
         this.calificacion = calificacion;
+        this.titulo = titulo;
         this.contenido = contenido;
-        this.fechaCreacion = LocalDateTime.now();
         this.activo = true;
-        this.flaggedAsSpam = false;
+        this.flagedAsSpam = false;
         this.reportesSpam = 0;
     }
 
@@ -71,8 +78,8 @@ public class Comentario {
     public boolean isActivo() { return activo; }
     public void setActivo(boolean activo) { this.activo = activo; }
 
-    public boolean isFlaggedAsSpam() { return flaggedAsSpam; }
-    public void setFlaggedAsSpam(boolean flaggedAsSpam) { this.flaggedAsSpam = flaggedAsSpam; }
+    public boolean isFlaggedAsSpam() { return flagedAsSpam; }
+    public void setFlaggedAsSpam(boolean flagedAsSpam) { this.flagedAsSpam = flagedAsSpam; }
 
     public Integer getReportesSpam() { return reportesSpam; }
     public void setReportesSpam(Integer reportesSpam) { this.reportesSpam = reportesSpam; }
