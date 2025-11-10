@@ -1,24 +1,24 @@
-# =============================
-# 1 Build stage
-# =============================
+#
+# 1️⃣ Build stage
+#
 FROM gradle:8.7-jdk17 AS build
+COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
-COPY --chown=gradle:gradle . .
-RUN gradle clean bootJar -x test --no-daemon
+RUN gradle clean bootJar --no-daemon
 
-# =============================
-# 2 Runtime stage
-# =============================
-FROM openjdk:17-jdk-slim
+#
+# 2️⃣ Runtime stage
+#
+FROM eclipse-temurin:17-jdk
 
-# Variable de entorno PORT usada por Render
+# Variable de entorno del puerto (Render asigna uno dinámico)
 ENV PORT=8080
 
-# Copiamos el jar generado
+# Copiar el jar generado
 COPY --from=build /home/gradle/src/build/libs/*.jar app.jar
 
-# Exponemos el puerto dinámico
+# Exponer el puerto (para Render)
 EXPOSE ${PORT}
 
-# Ejecutamos la app
+# Ejecutar la app
 ENTRYPOINT ["java", "-jar", "/app.jar"]
