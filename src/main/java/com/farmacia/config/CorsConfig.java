@@ -1,8 +1,10 @@
 package com.farmacia.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -25,7 +27,7 @@ public class CorsConfig {
     private String allowedOriginsString;
 
     @Bean
-    public CorsFilter corsFilter() {
+    public FilterRegistrationBean<CorsFilter> corsFilterRegistration() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
 
@@ -58,12 +60,16 @@ public class CorsConfig {
         config.setAllowCredentials(true);
 
         source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
+
+        FilterRegistrationBean<CorsFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new CorsFilter(source));
+        registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        return registrationBean;
     }
 
     @Bean
-    public OncePerRequestFilter corsLoggingFilter() {
-        return new OncePerRequestFilter() {
+    public FilterRegistrationBean<OncePerRequestFilter> corsLoggingFilterRegistration() {
+        OncePerRequestFilter loggingFilter = new OncePerRequestFilter() {
             @Override
             protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
                     throws ServletException, IOException {
@@ -79,5 +85,10 @@ public class CorsConfig {
                 System.out.println("CORS Response - Access-Control-Allow-Origin: " + acao);
             }
         };
+
+        FilterRegistrationBean<OncePerRequestFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(loggingFilter);
+        registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE + 1); // Just after CORS
+        return registrationBean;
     }
 }
