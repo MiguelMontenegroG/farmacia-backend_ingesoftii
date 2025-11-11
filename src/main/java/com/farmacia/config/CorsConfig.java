@@ -35,6 +35,10 @@ public class CorsConfig {
                     }
                 }
 
+                // Debug logging
+                System.out.println("CORS Config - Exact Origins: " + exactOrigins);
+                System.out.println("CORS Config - Pattern Origins: " + patternOrigins);
+
                 registry.addMapping("/**")
                         .allowedOrigins(exactOrigins.toArray(new String[0]))
                         .allowedOriginPatterns(patternOrigins.toArray(new String[0]))
