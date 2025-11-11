@@ -4,8 +4,6 @@ import com.farmacia.dto.ApiResponse;
 import com.farmacia.model.Favorito;
 import com.farmacia.model.Usuario;
 import com.farmacia.service.FavoritosService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +13,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/favoritos")
-@Tag(name = "Favoritos", description = "API para gestión de favoritos")
 public class FavoritosController {
 
     @Autowired
     private FavoritosService favoritosService;
 
     @GetMapping
-    @Operation(summary = "Obtener favoritos del usuario")
     public ResponseEntity<ApiResponse<List<Favorito>>> obtenerFavoritos() {
         try {
             // En entorno académico, usamos un ID de usuario fijo para pruebas
@@ -37,7 +33,6 @@ public class FavoritosController {
     }
 
     @GetMapping("/conteo")
-    @Operation(summary = "Obtener conteo de favoritos")
     public ResponseEntity<ApiResponse<Long>> obtenerConteoFavoritos() {
         try {
             // En entorno académico, usamos un ID de usuario fijo para pruebas
@@ -52,7 +47,6 @@ public class FavoritosController {
     }
 
     @GetMapping("/verificar/{productoId}")
-    @Operation(summary = "Verificar si un producto es favorito")
     public ResponseEntity<ApiResponse<Boolean>> verificarFavorito(@PathVariable String productoId) {
         try {
             // En entorno académico, usamos un ID de usuario fijo para pruebas
@@ -67,7 +61,6 @@ public class FavoritosController {
     }
 
     @PostMapping("/{productoId}")
-    @Operation(summary = "Agregar producto a favoritos")
     public ResponseEntity<ApiResponse<Void>> agregarFavorito(@PathVariable String productoId) {
         try {
             // En entorno académico, usamos un ID de usuario fijo para pruebas
@@ -82,7 +75,6 @@ public class FavoritosController {
     }
 
     @DeleteMapping("/{productoId}")
-    @Operation(summary = "Eliminar producto de favoritos")
     public ResponseEntity<ApiResponse<Void>> eliminarFavorito(@PathVariable String productoId) {
         try {
             // En entorno académico, usamos un ID de usuario fijo para pruebas

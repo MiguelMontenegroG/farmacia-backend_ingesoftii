@@ -1,14 +1,12 @@
 package com.farmacia.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import lombok.Data;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
-@Data
+@Getter
+@Setter
 public class ItemCarrito {
 
     private String id; // ID único del item en el carrito
@@ -52,5 +50,29 @@ public class ItemCarrito {
                 ? this.precioOferta
                 : this.precio;
         this.subtotal = precioFinal.multiply(BigDecimal.valueOf(this.cantidad));
+    }
+
+    public String getProductoId() {
+        return productoId;
+    }
+
+    public void setProductoId(String productoId) {
+        this.productoId = productoId;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public BigDecimal getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(BigDecimal subtotal) {
+        this.subtotal = subtotal;
     }
 }

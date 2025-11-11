@@ -3,8 +3,6 @@ package com.farmacia.controller;
 import com.farmacia.dto.ApiResponse;
 import com.farmacia.model.Notificacion;
 import com.farmacia.service.NotificacionesService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +12,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/notificaciones")
-@Tag(name = "Notificaciones", description = "API para gestión de notificaciones")
 public class NotificacionesController {
 
     @Autowired
     private NotificacionesService notificacionesService;
 
     @GetMapping
-    @Operation(summary = "Obtener notificaciones del usuario")
     public ResponseEntity<ApiResponse<List<Notificacion>>> obtenerNotificaciones() {
         try {
             // En entorno académico, usamos un ID de usuario fijo para pruebas
@@ -36,7 +32,6 @@ public class NotificacionesController {
     }
 
     @GetMapping("/no-leidas")
-    @Operation(summary = "Obtener conteo de notificaciones no leídas")
     public ResponseEntity<ApiResponse<Long>> obtenerConteoNoLeidas() {
         try {
             // En entorno académico, usamos un ID de usuario fijo para pruebas
@@ -51,7 +46,6 @@ public class NotificacionesController {
     }
 
     @PutMapping("/{id}/marcar-leida")
-    @Operation(summary = "Marcar notificación como leída")
     public ResponseEntity<ApiResponse<Void>> marcarComoLeida(@PathVariable String id) {
         try {
             // En entorno académico, usamos un ID de usuario fijo para pruebas
@@ -66,7 +60,6 @@ public class NotificacionesController {
     }
 
     @PutMapping("/marcar-todas-leidas")
-    @Operation(summary = "Marcar todas las notificaciones como leídas")
     public ResponseEntity<ApiResponse<Void>> marcarTodasComoLeidas() {
         try {
             // En entorno académico, usamos un ID de usuario fijo para pruebas
@@ -81,7 +74,6 @@ public class NotificacionesController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Eliminar notificación")
     public ResponseEntity<ApiResponse<Void>> eliminarNotificacion(@PathVariable String id) {
         try {
             // En entorno académico, usamos un ID de usuario fijo para pruebas

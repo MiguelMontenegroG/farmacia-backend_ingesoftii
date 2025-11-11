@@ -1,10 +1,12 @@
 package com.farmacia.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
-@Data
+@Getter
+@Setter
 public class ActualizarCantidadDTO {
 
     @NotBlank(message = "El ID del producto es requerido")
@@ -17,6 +19,14 @@ public class ActualizarCantidadDTO {
 
     public ActualizarCantidadDTO(String productoId, int cantidad) {
         this.productoId = productoId;
+        this.cantidad = cantidad;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
 }

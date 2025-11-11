@@ -6,9 +6,14 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class ReportarSpamResponseDTO {
     private String id;
     private Integer reportesSpam;
     private boolean flaggedAsSpam;
+
+    public ReportarSpamResponseDTO(String id, Integer reportesSpam, boolean flaggedAsSpam) {
+        this.id = id;
+        this.reportesSpam = reportesSpam;
+        this.flaggedAsSpam = flaggedAsSpam;
+    }
 }

@@ -8,9 +8,14 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class ComentariosProductoResponseDTO {
     private List<ComentarioDTO> comentarios;
     private Double calificacionPromedio;
     private Integer total;
+
+    public ComentariosProductoResponseDTO(List<ComentarioDTO> comentarios, Double calificacionPromedio, Integer total) {
+        this.comentarios = comentarios;
+        this.calificacionPromedio = calificacionPromedio;
+        this.total = total;
+    }
 }
