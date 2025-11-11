@@ -5,10 +5,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import java.util.Arrays;
 
 @Configuration
 public class CorsConfig {
-    
+
     @Value("${cors.allowed.origins:http://localhost:3000}")
     private String allowedOriginsString;
 
@@ -17,7 +18,9 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                String[] allowedOrigins = allowedOriginsString.split(",");
+                String[] allowedOrigins = Arrays.stream(allowedOriginsString.split(","))
+                    .map(String::trim)
+                    .toArray(String[]::new);
                 registry.addMapping("/**")
                         .allowedOriginPatterns(allowedOrigins)
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
